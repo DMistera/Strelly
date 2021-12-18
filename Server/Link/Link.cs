@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Strelly.Link
+namespace Strelly
 {
     public class Link
     {

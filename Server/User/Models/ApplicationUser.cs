@@ -7,5 +7,6 @@ using System.Threading.Tasks;
 
 namespace Strelly {
     public class ApplicationUser : IdentityUser<long> {
+        public ICollection<Task> AssignedTasks { get; set; }
     }
 }

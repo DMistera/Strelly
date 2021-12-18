@@ -27,7 +27,7 @@ namespace Strelly {
         public async Task<ActionResult<ApplicationUserDTO>> GetLoggedUser() {
             var user = await userManager.GetUserAsync(User);
             if (user == null) {
-                return NoContent();
+                return Unauthorized();
             } else {
                 return Ok(new ApplicationUserDTO(user));
             }

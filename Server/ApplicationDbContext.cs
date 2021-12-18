@@ -6,7 +6,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Strelly;
-using Strelly.Link;
 
 namespace Strelly {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, long> {
@@ -22,12 +21,28 @@ namespace Strelly {
 
         protected override void OnModelCreating(ModelBuilder builder) {
             base.OnModelCreating(builder);
+
+            builder.Entity<ApplicationUser>()
+                .HasMany(user => user.AssignedTasks)
+                .WithMany(task => task.Assignees)
+                .UsingEntity(e => e.ToTable("Assignees"));
+
+            builder.Entity<Link>()
+                .HasOne(link => link.FromTask)
+                .WithMany()
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Link>()
+                .HasOne(link => link.ToTask)
+                .WithMany()
+                .OnDelete(DeleteBehavior.NoAction);
+
         }
 
-        public DbSet<Strelly.Column> Column { get; set; }
+        public DbSet<Column> Column { get; set; }
 
-        public DbSet<Strelly.Task> Task { get; set; }
+        public DbSet<Task> Task { get; set; }
 
-        public DbSet<Strelly.Link.Link> Link { get; set; }
+        public DbSet<Link> Link { get; set; }
     }
 }

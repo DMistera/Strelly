@@ -11,5 +11,6 @@ namespace Strelly
         public Column Column { get; set; }
         public DateTime CreateTime { get; set; }
         public DateTime UpdateTime { get; set; }
+        public ICollection<ApplicationUser> Assignees { get; set; }
     }
 }
