@@ -76,7 +76,8 @@
               "browserTarget": "strelly-client:build:production"
             },
             "development": {
-              "browserTarget": "strelly-client:build:development"
+              "browserTarget": "strelly-client:build:development",
+              "proxyConfig": "./proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"

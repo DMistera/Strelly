@@ -1,0 +1,14 @@
+{
+    "/api": {
+      "target": "https://localhost:7157/api",
+      "secure": false,
+      "rejectUnauthorzied": true,
+      "withCredentials": true,
+      "strictSSL": true,
+      "changeOrigin": true,
+      "pathRewrite": {
+        "^/api": ""
+      }
+    }
+  }
+  
