@@ -7,34 +7,28 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Strelly;
 
-namespace Strelly
-{
+namespace Strelly {
     [Route("api/[controller]")]
     [ApiController]
-    public class ColumnsController : ControllerBase
-    {
-        private readonly ApplicationDbContext _context;
+    public class ColumnsController : ControllerBase {
+        private readonly ApplicationDbContext context;
 
-        public ColumnsController(ApplicationDbContext context)
-        {
-            _context = context;
+        public ColumnsController(ApplicationDbContext context) {
+            this.context = context;
         }
 
         // GET: api/Columns
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Column>>> GetColumn()
-        {
-            return await _context.Column.ToListAsync();
+        public async Task<ActionResult<IEnumerable<Column>>> GetColumn() {
+            return await context.Column.ToListAsync();
         }
 
         // GET: api/Columns/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Column>> GetColumn(long id)
-        {
-            var column = await _context.Column.FindAsync(id);
+        public async Task<ActionResult<Column>> GetColumn(long id) {
+            var column = await context.Column.FindAsync(id);
 
-            if (column == null)
-            {
+            if (column == null) {
                 return NotFound();
             }
 
@@ -44,64 +38,45 @@ namespace Strelly
         // PUT: api/Columns/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutColumn(long id, Column column)
-        {
-            if (id != column.Id)
-            {
-                return BadRequest();
+        public async Task<IActionResult> PutColumn(long id, ColumnCreateUpdate columnUpdate) {
+            if (ColumnExists(id)) {
+                Column column = context.Column.Find(id);
+                columnUpdate.UpdateColumn(column);
+                context.Entry(column).State = EntityState.Modified;
+                await context.SaveChangesAsync();
+                return Ok(column);
+            } else {
+                return NotFound();
             }
-
-            _context.Entry(column).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ColumnExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
         }
 
         // POST: api/Columns
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Column>> PostColumn(Column column)
-        {
-            _context.Column.Add(column);
-            await _context.SaveChangesAsync();
+        public async Task<ActionResult<Column>> PostColumn(ColumnCreateUpdate columnCreate) {
+            Column column = columnCreate.ToColumn();
+            context.Column.Add(column);
+            await context.SaveChangesAsync();
 
             return CreatedAtAction("GetColumn", new { id = column.Id }, column);
         }
 
         // DELETE: api/Columns/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteColumn(long id)
-        {
-            var column = await _context.Column.FindAsync(id);
-            if (column == null)
-            {
+        public async Task<IActionResult> DeleteColumn(long id) {
+            var column = await context.Column.FindAsync(id);
+            if (column == null) {
                 return NotFound();
             }
 
-            _context.Column.Remove(column);
-            await _context.SaveChangesAsync();
+            context.Column.Remove(column);
+            await context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok();
         }
 
-        private bool ColumnExists(long id)
-        {
-            return _context.Column.Any(e => e.Id == id);
+        private bool ColumnExists(long id) {
+            return context.Column.Any(e => e.Id == id);
         }
     }
 }

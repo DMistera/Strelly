@@ -11,13 +11,13 @@ namespace Strelly {
 
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase {
+    public class UsersController : ControllerBase {
 
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ApplicationDbContext dbContext;
 
-        public UserController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, ApplicationDbContext dbContext) {
+        public UsersController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, ApplicationDbContext dbContext) {
             this.signInManager = signInManager;
             this.userManager = userManager;
             this.dbContext = dbContext;
