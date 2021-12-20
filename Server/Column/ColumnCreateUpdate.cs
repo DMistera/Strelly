@@ -1,7 +1,10 @@
-﻿namespace Strelly
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Strelly
 {
     public class ColumnCreateUpdate
     {
+        [Required]
         public string Name { get; set; }
 
         public Column ToColumn()
