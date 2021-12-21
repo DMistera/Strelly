@@ -8,7 +8,6 @@ namespace Strelly {
         [Required]
         public long ColumnId { get; set; }
 
-
         public void UpdateTask(Task task) {
             task.Name = Name;
             task.Description = Description;

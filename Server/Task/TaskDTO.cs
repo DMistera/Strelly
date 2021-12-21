@@ -16,7 +16,7 @@
             Column = task.Column;
             CreateTime = task.CreateTime;
             UpdateTime = task.UpdateTime;
-            Assignees = task.Assignees.Select(assignee => new ApplicationUserDTO(assignee));
+            Assignees = task.Assignees == null ? null : task.Assignees.Select(assignee => new ApplicationUserDTO(assignee));
         }
 
     }

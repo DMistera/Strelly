@@ -13,72 +13,77 @@ namespace Strelly
     [ApiController]
     public class LinksController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext context;
 
         public LinksController(ApplicationDbContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
         // GET: api/Links
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Link>>> GetLink()
+        public async Task<ActionResult<IEnumerable<LinkDTO>>> GetLink()
         {
-            return await _context.Link.ToListAsync();
+            var list = await context.Link.Include(link => link.FromTask).Include(link => link.ToTask).ToListAsync();
+            return Ok(list.Select(link => new LinkDTO(link)));
         }
 
         // GET: api/Links/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Link>> GetLink(long id)
+        public async Task<ActionResult<LinkDTO>> GetLink(long id)
         {
-            var link = await _context.Link.FindAsync(id);
+            var link = await context.Link.Include(link => link.FromTask).Include(link => link.ToTask).FirstOrDefaultAsync(link => link.Id == id);
 
             if (link == null)
             {
                 return NotFound();
             }
 
-            return link;
+            return new LinkDTO(link);
         }
 
         // PUT: api/Links/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutLink(long id, Link link)
+        public async Task<ActionResult<LinkDTO>> PutLink(long id, LinkCreateUpdate linkUpdate)
         {
-            if (id != link.Id)
-            {
-                return BadRequest();
+
+            Link link = await context.Link.FindAsync(id);
+            if(link == null) {
+                return NotFound();
+            }
+            link.FromTask = await context.Task.FindAsync(linkUpdate.FromTaskId);
+            if (link.FromTask == null) {
+                return NotFound("FromTaskId");
+            }
+            link.ToTask = await context.Task.FindAsync(linkUpdate.ToTaskId);
+            if (link.ToTask == null) {
+                return NotFound("ToTaskId");
             }
 
-            _context.Entry(link).State = EntityState.Modified;
+            context.Entry(link).State = EntityState.Modified;
+            await context.SaveChangesAsync();
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!LinkExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return Ok(link);
         }
 
         // POST: api/Links
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Link>> PostLink(Link link)
+        public async Task<ActionResult<LinkDTO>> PostLink(LinkCreateUpdate linkCreate)
         {
-            _context.Link.Add(link);
-            await _context.SaveChangesAsync();
+            Link link = new();
+            link.Type = linkCreate.Type;
+            link.FromTask = await context.Task.FindAsync(linkCreate.FromTaskId);
+            if(link.FromTask == null) {
+                return NotFound("FromTaskId");
+            }
+            link.ToTask = await context.Task.FindAsync(linkCreate.ToTaskId);
+            if (link.ToTask == null) {
+                return NotFound("ToTaskId");
+            }
+            context.Link.Add(link);
+            await context.SaveChangesAsync();
 
             return CreatedAtAction("GetLink", new { id = link.Id }, link);
         }
@@ -87,21 +92,18 @@ namespace Strelly
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteLink(long id)
         {
-            var link = await _context.Link.FindAsync(id);
+            var link = await context.Link.FindAsync(id);
             if (link == null)
             {
                 return NotFound();
             }
 
-            _context.Link.Remove(link);
-            await _context.SaveChangesAsync();
+            context.Link.Remove(link);
+            await context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok();
         }
 
-        private bool LinkExists(long id)
-        {
-            return _context.Link.Any(e => e.Id == id);
-        }
+        
     }
 }
