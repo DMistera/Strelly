@@ -1,0 +1,16 @@
+<p>home works!</p>
+<button (click)="loginUser()" *ngIf="user==null">
+    Login
+</button>
+
+<button (click)="logoutUser()" *ngIf="user!=null">
+    Logout
+</button>
+<div *ngIf="user!=null">
+    {{user.userName}}
+</div>
+<hr/>
+Register temp account
+<button (click)="registerUser()">
+    Register
+</button>
