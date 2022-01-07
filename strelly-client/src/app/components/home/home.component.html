@@ -1,9 +1,8 @@
-<p>home works!</p>
-<button (click)="loginUser()" *ngIf="user==null">
+<button mat-stroked-button (click)="loginUser()" *ngIf="user==null">
     Login
 </button>
 
-<button (click)="logoutUser()" *ngIf="user!=null">
+<button mat-stroked-button (click)="logoutUser()" *ngIf="user!=null">
     Logout
 </button>
 <div *ngIf="user!=null">
@@ -11,6 +10,8 @@
 </div>
 <hr/>
 Register temp account
-<button (click)="registerUser()">
+<button mat-stroked-button (click)="registerUser()">
     Register
 </button>
+
+<app-login-card></app-login-card>

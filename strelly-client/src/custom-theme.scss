@@ -1,0 +1,17 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$cms-fd-primary: mat.define-palette(mat.$grey-palette);
+$cms-fd-accent: mat.define-palette(mat.$blue-grey-palette);
+$cms-fd-warn: mat.define-palette(mat.$red-palette);
+
+$cms-fd-theme: mat.define-light-theme((
+  color: (
+    primary: $cms-fd-primary,
+    accent: $cms-fd-accent,
+    warn: $cms-fd-warn,
+  )
+));
+
+@include mat.all-component-themes($cms-fd-theme);
