@@ -1,3 +1,4 @@
+import { LoadingService } from './../loading.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
@@ -9,11 +10,12 @@ import { AuthService } from './../auth.service';
 })
 export class LoggedInGuard implements CanActivate {
 
-  constructor(private router: Router, private authService: AuthService) { }
+  constructor(private router: Router, private authService: AuthService, private spinner: LoadingService) { }
 
   canActivate(): Observable<boolean> {
     return this.authService.isUserLoggedIn().pipe(map(data => {
       console.log({'logged-in guard': data});
+      this.spinner.hide();
       if (!data) {
         this.router.navigate(['/auth']);
         return false;

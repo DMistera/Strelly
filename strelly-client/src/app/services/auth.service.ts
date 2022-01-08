@@ -4,6 +4,7 @@ import {BehaviorSubject, Observable, AsyncSubject} from 'rxjs';
 import {map} from 'rxjs/operators';
 
 import { User } from '@app/models';
+import { LoadingService } from './loading.service';
 
 const HTTP_OPTIONS = {
   headers: new HttpHeaders({
@@ -22,7 +23,7 @@ export class AuthService {
   private userLoggedInSubject: AsyncSubject<boolean>;
   private userLoggedInObservable: Observable<boolean>;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private spinner: LoadingService) {
     this.userLoggedInSubject = new AsyncSubject<boolean>();
     this.userSubject = new AsyncSubject<User|null>();
     this.userObservable = this.userSubject.asObservable();
@@ -44,6 +45,7 @@ export class AuthService {
   }
 
   login(userName: string, password: string) {
+    this.spinner.show();
     this.userLoggedInSubject = new AsyncSubject<boolean>();
     this.userSubject = new AsyncSubject<User|null>();
     this.userObservable = this.userSubject.asObservable();
@@ -52,12 +54,11 @@ export class AuthService {
       `/api/Users/Login`,
       {"userName": userName, "password": password},
       HTTP_OPTIONS
-    ).pipe(
-      map(data => {
+    ).pipe(map(data => {
         console.log({login: data.status})
         if(data.status == 200){
           return this.getUserData().subscribe(
-            data => { this.setUserData(data); },
+            data => { this.setUserData(data);this.spinner.hide(); },
             err => { console.error(err); }
           );
         }
@@ -67,6 +68,7 @@ export class AuthService {
   }
 
   register(userName: string, email: string, password: string) {
+    this.spinner.show();
     this.userLoggedInSubject = new AsyncSubject<boolean>();
     this.userSubject = new AsyncSubject<User|null>();
     this.userObservable = this.userSubject.asObservable();
@@ -75,13 +77,13 @@ export class AuthService {
       '/api/Users/Register',
       {"userName": userName, "email": email, "password": password},
       HTTP_OPTIONS
-    ).pipe(
-      map(data => {
+    ).pipe(map(data => {
       console.log({register: data.status, data: data})
       this.userSubject.next(null);
       this.userLoggedInSubject.next(false);
       this.userLoggedInSubject.complete();
       this.userSubject.complete();
+      this.spinner.hide();
       return data;
     }));
   }
