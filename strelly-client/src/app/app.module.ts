@@ -8,11 +8,17 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AppComponent } from './app.component';
-import { HomeComponent } from './components/home/home.component';
+import { HomeComponent } from './pages/home/home.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { LoginCardComponent } from './components/login-card/login-card.component';
+import { RegisterCardComponent } from './components/register-card/register-card.component';
+import { AuthComponent } from './pages/auth/auth.component';
 
 
 @NgModule({
@@ -20,7 +26,9 @@ import { LoginCardComponent } from './components/login-card/login-card.component
     AppComponent,
     HomeComponent,
     NavBarComponent,
-    LoginCardComponent
+    LoginCardComponent,
+    RegisterCardComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +40,11 @@ import { LoginCardComponent } from './components/login-card/login-card.component
     MatToolbarModule,
     MatButtonModule,
     MatCardModule,
-    MatInputModule
+    MatInputModule,
+    MatCheckboxModule,
+    MatProgressSpinnerModule,
+    MatIconModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

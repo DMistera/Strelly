@@ -1,4 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '@app/services/auth.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -8,5 +10,17 @@ import { Component, Input, OnInit } from '@angular/core';
 export class NavBarComponent {
   @Input() appTitle: string;
 
-  constructor() { }
+  constructor(private router: Router, private authService: AuthService) { }
+
+  logoutUser() {
+    this.authService.logout().subscribe(
+      () => {
+        this.router.navigate(['/auth']);
+      },
+      err => {
+        alert("Nie wylogowano");
+        console.error(err);
+      }
+    );
+  }
 }

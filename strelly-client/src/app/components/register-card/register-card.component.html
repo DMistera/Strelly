@@ -1,6 +1,6 @@
 <mat-card>
   <mat-card-title>
-    <h2>Log In</h2>
+    <h2>Sign Up</h2>
   </mat-card-title>
   <mat-card-content>
     <form (ngSubmit)="onSubmit()">
@@ -10,6 +10,18 @@
           <input matInput type="text" placeholder="John Doe" [formControl]="userNameFormControl">
           <mat-error *ngIf="userNameFormControl.hasError('required')">
             User name is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput type="text" placeholder="example@email.com" [formControl]="emailFormControl">
+          <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+            Please enter a valid email address
+          </mat-error>
+          <mat-error *ngIf="emailFormControl.hasError('required')">
+            Email is <strong>required</strong>
           </mat-error>
         </mat-form-field>
       </p>
@@ -25,10 +37,11 @@
           </mat-error>
         </mat-form-field>
       </p>
-      <p><button mat-raised-button color="accent" class="full-width">LOG IN</button></p>
+      <p><button mat-raised-button color="accent" class="full-width">SIGN UP</button></p>
     </form>
   </mat-card-content>
   <mat-card-footer>
-    <p>Need an account? <a href="#">SIGN UP</a></p>
+    <p>Have an account? <a href="#">LOG IN</a></p>
   </mat-card-footer>
 </mat-card>
+<button mat-button (click)="openSnackBar()">Test snackBar</button>
