@@ -1,6 +1,7 @@
 <mat-toolbar color="accent">
   <span>{{ appTitle }}</span>
   <span class="spacer"></span>
+  <span *ngIf="user!=null" style="margin-right: 8px;">Welcome, {{user.userName}}</span>
   <button mat-icon-button aria-label="Log out" (click)="logoutUser()">
     <mat-icon>logout</mat-icon>
   </button>

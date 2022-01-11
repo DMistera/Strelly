@@ -12,6 +12,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -19,6 +20,7 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { LoginCardComponent } from './components/login-card/login-card.component';
 import { RegisterCardComponent } from './components/register-card/register-card.component';
 import { AuthComponent } from './pages/auth/auth.component';
+import { NewColumnDialogComponent } from './components/new-column-dialog/new-column-dialog.component';
 
 
 @NgModule({
@@ -28,7 +30,8 @@ import { AuthComponent } from './pages/auth/auth.component';
     NavBarComponent,
     LoginCardComponent,
     RegisterCardComponent,
-    AuthComponent
+    AuthComponent,
+    NewColumnDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +47,8 @@ import { AuthComponent } from './pages/auth/auth.component';
     MatCheckboxModule,
     MatProgressSpinnerModule,
     MatIconModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from '@app/models/User';
 import { AuthService } from '@app/services/auth.service';
 
 @Component({
@@ -9,6 +10,7 @@ import { AuthService } from '@app/services/auth.service';
 })
 export class NavBarComponent {
   @Input() appTitle: string;
+  @Input() user: User|null;
 
   constructor(private router: Router, private authService: AuthService) { }
 

@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>New column</h1>
+<div mat-dialog-content>
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Column name</mat-label>
+    <input matInput type="text" placeholder="To do" [formControl]="nameFormControl">
+    <mat-error *ngIf="nameFormControl.hasError('required')">
+      Column name is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+</div>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="undefined">Cancel</button>
+  <button mat-flat-button (click)="closeDialog()" color="accent">Add</button>
+</mat-dialog-actions>

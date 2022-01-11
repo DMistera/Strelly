@@ -1,5 +1,29 @@
-<app-nav-bar [appTitle]="'Strelly'"></app-nav-bar>
+<app-nav-bar [appTitle]="'Strelly'" [user]="user"></app-nav-bar>
+<div class="columns-wrapper">
+  <div class="columns">
+    <mat-card class="column" *ngFor="let column of (columns | async)">
+      <div class="columns-header">
+        <div class="column-name">
+          <mat-card-title>{{column.name}}</mat-card-title>
+          <mat-card-subtitle>{{ dateFormat(column.date) | date:'short' }}</mat-card-subtitle>
+        </div>
+        <div class="column-tools">
+          <button mat-icon-button color="accent"><mat-icon>add</mat-icon></button>
+        </div>
+      </div>
+      <div class="tasks">
+        <mat-card>*</mat-card>
+        <mat-card>*</mat-card>
+        <mat-card>*</mat-card>
+        <mat-card>*</mat-card>
+        <mat-card>*</mat-card>
+      </div>
+    </mat-card>
+    <mat-card class="column column-new">
+      <button mat-icon-button color="primary" (click)="newColumnDialog()"><mat-icon >add</mat-icon></button>
+    </mat-card>
 
-<div *ngIf="user!=null">
-    <p>User name: <strong>{{user.userName}}</strong></p>
+  </div>
 </div>
+
+
