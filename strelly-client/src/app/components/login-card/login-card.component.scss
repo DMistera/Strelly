@@ -13,3 +13,10 @@ mat-card {
 mat-form-field {
   display: block;
 }
+
+.mat-spinner {
+  margin: 6px auto;
+  ::ng-deep circle {
+      stroke: #fff;
+  }
+}

@@ -23,12 +23,20 @@
           <mat-error *ngIf="passwordFormControl.hasError('required')">
             Password is <strong>required</strong>
           </mat-error>
+          <mat-error *ngIf="passwordFormControl.hasError('minlength') && !passwordFormControl.hasError('required')">
+            The password should contain at least 6 characters, one uppercase letter, one lowercase letter, one number and one special character.
+          </mat-error>
+          <mat-error *ngIf="passwordFormControl.hasError('validation')">
+            {{passwordFormControl.getError('validation')}}
+          </mat-error>
         </mat-form-field>
       </p>
-      <p><button mat-raised-button color="accent" class="full-width">LOG IN</button></p>
+      <p>
+        <button mat-raised-button color="accent" class="full-width">
+          <mat-spinner *ngIf="loading" mode="indeterminate" color="primary" diameter="24"></mat-spinner>
+          <span *ngIf="!loading">LOG IN</span>
+        </button>
+      </p>
     </form>
   </mat-card-content>
-  <mat-card-footer>
-    <p>Need an account? <a href="#">SIGN UP</a></p>
-  </mat-card-footer>
 </mat-card>

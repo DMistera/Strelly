@@ -37,11 +37,13 @@
           </mat-error>
         </mat-form-field>
       </p>
-      <p><button mat-raised-button color="accent" class="full-width">SIGN UP</button></p>
+      <p>
+        <button mat-raised-button color="accent" class="full-width">
+          <mat-spinner *ngIf="loading" mode="indeterminate" color="primary" diameter="24"></mat-spinner>
+          <span *ngIf="!loading">SIGN UP</span>
+        </button>
+      </p>
     </form>
   </mat-card-content>
-  <mat-card-footer>
-    <p>Have an account? <a href="#">LOG IN</a></p>
-  </mat-card-footer>
 </mat-card>
 <button mat-button (click)="openSnackBar()">Test snackBar</button>
