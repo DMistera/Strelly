@@ -28,7 +28,7 @@ builder.Services.AddAuthentication((cfg => {
 
 builder.Services.AddControllers().ConfigureApiBehaviorOptions(options => {
     options.InvalidModelStateResponseFactory = context => {
-        var result = new ValidationFailedResult(context.ModelState);
+        var result = new ValidationFailedResult(context.ModelState, StatusCodes.Status400BadRequest);
         result.ContentTypes.Add(MediaTypeNames.Application.Json);
         return result;
     };

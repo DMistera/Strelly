@@ -6,9 +6,9 @@ namespace Strelly
 {
     public class ValidationFailedResult : ObjectResult
     {
-        public ValidationFailedResult(ModelStateDictionary modelState) : base(new ValidationResultModel(modelState, StatusCodes.Status400BadRequest))
+        public ValidationFailedResult(ModelStateDictionary modelState, int statusCode) : base(new ValidationResultModel(modelState, statusCode))
         {
-            StatusCode = StatusCodes.Status400BadRequest;
+            StatusCode = statusCode;
         }
     }
 }

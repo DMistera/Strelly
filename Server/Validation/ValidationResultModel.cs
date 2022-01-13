@@ -11,14 +11,15 @@ namespace Strelly
     {
         public int Status { get; }
 
-        public List<ValidationError> Error { get; }
+        public Dictionary<string, string[]> Errors { get; }
 
         public ValidationResultModel(ModelStateDictionary modelState, int Status)
         {
             this.Status = Status;
-            Error = modelState.Keys
-                    .SelectMany(key => modelState[key].Errors.Select(x => new ValidationError(key, x.ErrorMessage)))
-                    .ToList();
+            Errors = new Dictionary<string, string[]>();
+            foreach(var key in modelState.Keys) {
+                Errors[key] = modelState[key].Errors.Select(e => e.ErrorMessage).ToArray();
+            }
         }
     }
 }

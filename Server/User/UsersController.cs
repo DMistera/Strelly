@@ -45,18 +45,18 @@ namespace Strelly {
 
         [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginModel model) {
+
+            if (!(await UsernameTaken(model.UserName))) {
+                ModelState.AddModelError("username", "User does not exist");
+                return new ValidationFailedResult(ModelState, StatusCodes.Status400BadRequest);
+            }
             Microsoft.AspNetCore.Identity.SignInResult result = await signInManager.PasswordSignInAsync(model.UserName, model.Password, true, false);
             if (result.Succeeded) {
                 return Ok();
-            }
-            else if (result.IsLockedOut) {
-                ModelState.AddModelError("LockedOut", "Account is locked out");
-            } else if (result.IsNotAllowed) {
-                ModelState.AddModelError("IsNotAllowed", "Email confirmation required");
             } else {
-                ModelState.AddModelError("InvalidLogin", "Login or Password is incorrect");
+                ModelState.AddModelError("password", "Password is incorrect");
             }
-            return Unauthorized(new ValidationResultModel(ModelState, StatusCodes.Status401Unauthorized));
+            return new ValidationFailedResult(ModelState, StatusCodes.Status400BadRequest);
         }
 
         [HttpDelete("Logout")]
@@ -68,17 +68,23 @@ namespace Strelly {
         [HttpPost("Register")]
         public async Task<IActionResult> Register(RegisterModel register) {
             ApplicationUser user = register.CreateUser();
+
             IdentityResult result = await userManager.CreateAsync(
                 user,
                 register.Password
             );
             if (!result.Succeeded) {
                 foreach (IdentityError error in result.Errors) {
-                    ModelState.AddModelError(error.Code, error.Description);
+                    string field = error.Code.Contains("password", System.StringComparison.CurrentCultureIgnoreCase) ? "password" : "username";
+                    ModelState.AddModelError(field, error.Description);
                 }
-                return ValidationProblem(ModelState);
+                return new ValidationFailedResult(ModelState, StatusCodes.Status400BadRequest);
             }
             return Ok();
+        }
+
+        private async Task<bool> UsernameTaken(string username) {
+            return await userManager.FindByNameAsync(username) != null;
         }
     }
 }
