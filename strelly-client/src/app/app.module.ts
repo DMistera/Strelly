@@ -13,6 +13,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -48,7 +49,8 @@ import { NewColumnDialogComponent } from './components/new-column-dialog/new-col
     MatProgressSpinnerModule,
     MatIconModule,
     MatSnackBarModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

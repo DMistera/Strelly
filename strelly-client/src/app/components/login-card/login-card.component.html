@@ -1,34 +1,35 @@
-<mat-card>
-  <mat-card-title>
-    <h2>Log In</h2>
-  </mat-card-title>
-  <mat-card-content>
-    <form (ngSubmit)="onSubmit()">
-      <p>
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>User name</mat-label>
-          <input matInput type="text" placeholder="John Doe" [formControl]="userNameFormControl">
-          <mat-error *ngIf="userNameFormControl.hasError('required')">
-            User name is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Password</mat-label>
-          <input matInput type="password" [formControl]="passwordFormControl">
-          <mat-error *ngIf="passwordFormControl.hasError('minlength') && !passwordFormControl.hasError('required')">
-            The password should contain at least 6 characters, one uppercase letter, one lowercase letter, one number and one special character.
-          </mat-error>
-          <mat-error *ngIf="passwordFormControl.hasError('required')">
-            Password is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
-      </p>
-      <p><button mat-raised-button color="accent" class="full-width">LOG IN</button></p>
-    </form>
-  </mat-card-content>
-  <mat-card-footer>
-    <p>Need an account? <a href="#">SIGN UP</a></p>
-  </mat-card-footer>
-</mat-card>
+<form (ngSubmit)="onSubmit()">
+  <p>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>User name</mat-label>
+      <input matInput type="text" placeholder="John Doe" [formControl]="userNameFormControl">
+      <mat-error *ngIf="userNameFormControl.hasError('required')">
+        User name is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="userNameFormControl.hasError('username')">
+        {{userNameFormControl.getError('username')}}
+      </mat-error>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" [formControl]="passwordFormControl">
+      <mat-error *ngIf="passwordFormControl.hasError('minlength') && !passwordFormControl.hasError('required')">
+        The password should contain at least 6 characters, one uppercase letter, one lowercase letter, one number and one special character.
+      </mat-error>
+      <mat-error *ngIf="passwordFormControl.hasError('required')">
+        Password is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="passwordFormControl.hasError('password')">
+        {{passwordFormControl.getError('password')}}
+      </mat-error>
+    </mat-form-field>
+  </p>
+  <p>
+    <button mat-raised-button color="accent" class="full-width">
+      <mat-spinner *ngIf="loading" mode="indeterminate" color="primary" diameter="24"></mat-spinner>
+      <span *ngIf="!loading">LOG IN</span>
+    </button>
+  </p>
+</form>

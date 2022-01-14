@@ -9,9 +9,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./register-card.component.scss']
 })
 export class RegisterCardComponent {
-  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   passwordFormControl = new FormControl('', [Validators.required, Validators.minLength(6)]);
   userNameFormControl = new FormControl('', [Validators.required]);
+  loading = false;
 
   constructor(private authService: AuthService, private snackBar: MatSnackBar) { }
 
@@ -24,14 +24,38 @@ export class RegisterCardComponent {
   }
 
   onSubmit() {
+    if(this.userNameFormControl.invalid || this.passwordFormControl.invalid) return;
+    this.loading = true;
     const userName = this.userNameFormControl.value;
     const password = this.passwordFormControl.value;
-    const email = this.emailFormControl.value;
-    console.log({userName, password, email});
 
-    this.authService.register(userName, email, password).subscribe(data => {
+    this.authService.register(userName, password).subscribe(() => {
+      this.loading = false;
       this.openSnackBar();
+      this.resetForm();
+    },
+    errors => {
+      this.loading = false;
+      for(let field in errors) {
+        this.handleError(field, errors[field]);
+      }
     })
+  }
+
+  handleError(field: string, messages: string[]) {
+    if (field === 'password') {
+      this.passwordFormControl.setErrors({'password': messages.join(' ')});
+    }
+    if (field === 'username') {
+      this.userNameFormControl.setErrors({'username': messages.join(' ')});
+    }
+  }
+
+  resetForm() {
+    this.userNameFormControl.reset();
+    this.userNameFormControl.setErrors(null);
+    this.passwordFormControl.reset();
+    this.passwordFormControl.setErrors(null);
   }
 
 }
