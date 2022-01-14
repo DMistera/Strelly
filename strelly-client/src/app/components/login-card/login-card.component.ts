@@ -16,28 +16,30 @@ export class LoginCardComponent {
   constructor(private router: Router, private authService: AuthService) { }
 
   onSubmit() {
-    if(!this.userNameFormControl.valid || !this.passwordFormControl.valid) return;
+    if (this.userNameFormControl.invalid || this.passwordFormControl.invalid) return;
     this.loading = true;
     const userName = this.userNameFormControl.value;
     const password = this.passwordFormControl.value;
-    console.log({userName, password});
 
     this.authService.login(userName, password).subscribe(data => {
-      // this.loading = false;
       this.router.navigate(['home']);
     },
     errors => {
       this.loading = false;
-      for(let error of errors) {
-        console.error(error);
-        this.handleError(error?.key, error?.message)
+      for(let field in errors) {
+        this.handleError(field, errors[field]);
       }
     })
   }
 
-  handleError(ker: string, message: string) {
-    this.userNameFormControl.setErrors({'validation': message});
-    this.passwordFormControl.setErrors({'validation': message});
+  handleError(field: string, messages: string[]) {
+    if (field === 'password') {
+      this.userNameFormControl.setErrors({'password': messages.join(' ')});
+      this.passwordFormControl.setErrors({'password': messages.join(' ')});
+    }
+    if (field === 'username') {
+      this.userNameFormControl.setErrors({'username': messages.join(' ')});
+    }
   }
 
 }

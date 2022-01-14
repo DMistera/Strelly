@@ -66,15 +66,12 @@ export class AuthService {
         return data;
       }), catchError(error => {
         console.error(error);
-        if(error.status === 401) {
-          return throwError(error?.error?.error);
-        }
-        return throwError(error);
+        return throwError(error?.error?.errors);
       })
     );
   }
 
-  register(userName: string, email: string, password: string) {
+  register(userName: string, password: string) {
     // this.spinner.show();
     this.userLoggedInSubject = new AsyncSubject<boolean>();
     this.userSubject = new AsyncSubject<User|null>();
@@ -82,7 +79,7 @@ export class AuthService {
     this.userLoggedInObservable = this.userLoggedInSubject.asObservable();
     return this.http.post<any>(
       '/api/Users/Register',
-      {"userName": userName, "email": email, "password": password},
+      {"userName": userName, "password": password},
       HTTP_OPTIONS
     ).pipe(map(data => {
       console.log({register: data.status, data: data})
@@ -94,10 +91,7 @@ export class AuthService {
       return data;
     }), catchError(error => {
       console.error(error);
-      if(error.status === 401 || error.status === 400) {
-        return throwError(error?.error?.errors);
-      }
-      return throwError(error);
+      return throwError(error?.error?.errors);
     }));
   }
 
