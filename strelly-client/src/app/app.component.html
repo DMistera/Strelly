@@ -1,2 +1,2 @@
-<mat-spinner [mode]="'indeterminate'" *ngIf="loadingObservable | async"></mat-spinner>
+<mat-spinner mode="indeterminate" *ngIf="loadingObservable | async"></mat-spinner>
 <router-outlet  *ngIf="!(loadingObservable | async)"></router-outlet>

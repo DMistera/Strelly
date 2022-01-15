@@ -1,2 +1,14 @@
-<app-login-card></app-login-card>
-<app-register-card></app-register-card>
+<mat-card>
+  <mat-tab-group mat-stretch-tabs>
+    <mat-tab label="Log in">
+      <mat-card-content>
+        <app-login-card></app-login-card>
+      </mat-card-content>
+    </mat-tab>
+    <mat-tab label="Sign Up">
+      <mat-card-content>
+        <app-register-card></app-register-card>
+      </mat-card-content>
+    </mat-tab>
+  </mat-tab-group>
+</mat-card>

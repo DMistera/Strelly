@@ -1,47 +1,35 @@
-<mat-card>
-  <mat-card-title>
-    <h2>Sign Up</h2>
-  </mat-card-title>
-  <mat-card-content>
-    <form (ngSubmit)="onSubmit()">
-      <p>
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>User name</mat-label>
-          <input matInput type="text" placeholder="John Doe" [formControl]="userNameFormControl">
-          <mat-error *ngIf="userNameFormControl.hasError('required')">
-            User name is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Email</mat-label>
-          <input matInput type="text" placeholder="example@email.com" [formControl]="emailFormControl">
-          <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-            Please enter a valid email address
-          </mat-error>
-          <mat-error *ngIf="emailFormControl.hasError('required')">
-            Email is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Password</mat-label>
-          <input matInput type="password" [formControl]="passwordFormControl">
-          <mat-error *ngIf="passwordFormControl.hasError('minlength') && !passwordFormControl.hasError('required')">
-            The password should contain at least 6 characters, one uppercase letter, one lowercase letter, one number and one special character.
-          </mat-error>
-          <mat-error *ngIf="passwordFormControl.hasError('required')">
-            Password is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
-      </p>
-      <p><button mat-raised-button color="accent" class="full-width">SIGN UP</button></p>
-    </form>
-  </mat-card-content>
-  <mat-card-footer>
-    <p>Have an account? <a href="#">LOG IN</a></p>
-  </mat-card-footer>
-</mat-card>
-<button mat-button (click)="openSnackBar()">Test snackBar</button>
+<form (ngSubmit)="onSubmit()">
+  <p>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>User name</mat-label>
+      <input matInput type="text" name="username" placeholder="John Doe" [formControl]="userNameFormControl">
+      <mat-error *ngIf="userNameFormControl.hasError('required')">
+        User name is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="userNameFormControl.hasError('username')">
+        {{userNameFormControl.getError('username')}}
+      </mat-error>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" name="password" [formControl]="passwordFormControl">
+      <mat-error *ngIf="passwordFormControl.hasError('minlength') && !passwordFormControl.hasError('required')">
+        The password should contain at least 6 characters, one uppercase letter, one lowercase letter, one number and one special character.
+      </mat-error>
+      <mat-error *ngIf="passwordFormControl.hasError('required')">
+        Password is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="passwordFormControl.hasError('password')">
+        {{passwordFormControl.getError('password')}}
+      </mat-error>
+    </mat-form-field>
+  </p>
+  <p>
+    <button type="submit" mat-raised-button color="accent" class="full-width">
+      <mat-spinner *ngIf="loading" mode="indeterminate" color="primary" diameter="24"></mat-spinner>
+      <span *ngIf="!loading">SIGN UP</span>
+    </button>
+  </p>
+</form>
