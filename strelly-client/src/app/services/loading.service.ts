@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class LoadingService {
-  private loadingSubject = new BehaviorSubject<boolean>(false);
+  private loadingSubject = new BehaviorSubject<boolean>(true);
   public readonly loadingObservable = this.loadingSubject.asObservable();
 
   constructor() { }

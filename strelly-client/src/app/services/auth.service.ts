@@ -29,7 +29,7 @@ export class AuthService {
     this.userObservable = this.userSubject.asObservable();
     this.userLoggedInObservable = this.userLoggedInSubject.asObservable();
     this.getUserData().subscribe(
-      data => { this.setUserData(data); },
+      data => { this.setUserData(data);this.spinner.hide(); },
       err => {
         console.error(err);
         this.userSubject.next(null);

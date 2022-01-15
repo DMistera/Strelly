@@ -13,6 +13,8 @@ export class NewColumnDialogComponent {
   constructor(public dialogRef: MatDialogRef<NewColumnDialogComponent>) { }
 
   closeDialog() {
-    if (!this.nameFormControl.hasError('required')) this.dialogRef.close(this.nameFormControl.value);
+    if (this.nameFormControl.valid) {
+      this.dialogRef.close(this.nameFormControl.value);
+    }
   }
 }
