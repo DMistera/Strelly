@@ -22,6 +22,8 @@ import { LoginCardComponent } from './components/login-card/login-card.component
 import { RegisterCardComponent } from './components/register-card/register-card.component';
 import { AuthComponent } from './pages/auth/auth.component';
 import { NewColumnDialogComponent } from './components/new-column-dialog/new-column-dialog.component';
+import { ColumnComponent } from './components/column/column.component';
+import { TaskComponent } from './components/task/task.component';
 
 
 @NgModule({
@@ -32,7 +34,9 @@ import { NewColumnDialogComponent } from './components/new-column-dialog/new-col
     LoginCardComponent,
     RegisterCardComponent,
     AuthComponent,
-    NewColumnDialogComponent
+    NewColumnDialogComponent,
+    ColumnComponent,
+    TaskComponent
   ],
   imports: [
     BrowserModule,

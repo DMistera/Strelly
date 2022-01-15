@@ -1,0 +1,19 @@
+<mat-card class="column" [ngClass]="{'column': true, 'column-new': new}">
+  <button *ngIf="new" mat-icon-button color="primary" (click)="newColumnDialog()"><mat-icon >add</mat-icon></button>
+  <div class="columns-header" *ngIf="!new">
+    <div class="column-name">
+      <mat-card-title>{{column.name}}</mat-card-title>
+    </div>
+    <div class="column-tools">
+      <button mat-icon-button color="accent" (click)="newTask()"><mat-icon>add</mat-icon></button>
+    </div>
+  </div>
+  <div class="tasks" *ngIf="!new">
+    <app-task></app-task>
+    <app-task></app-task>
+    <app-task></app-task>
+    <app-task></app-task>
+    <app-task></app-task>
+    <app-task></app-task>
+  </div>
+</mat-card>

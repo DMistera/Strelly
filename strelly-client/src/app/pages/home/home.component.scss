@@ -15,28 +15,3 @@
   flex-flow: row nowrap;
   box-sizing: border-box;
 }
-
-.column {
-  flex-basis: 1;
-  min-width: 350px;
-  height: 100%;
-  margin: 0 8px;
-  box-sizing: border-box;
-  &.column-new {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    & button {
-      transform: scale(3);
-    }
-  }
-}
-
-.columns-header {
-  display: flex;
-  justify-content: space-between;
-}
-
-.tasks > mat-card:not(:last-child) {
-  margin-bottom: 8px;
-}
