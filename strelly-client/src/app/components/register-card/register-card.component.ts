@@ -12,6 +12,7 @@ export class RegisterCardComponent {
   passwordFormControl = new FormControl('', [Validators.required, Validators.minLength(6)]);
   userNameFormControl = new FormControl('', [Validators.required]);
   loading = false;
+  hide = true;
 
   constructor(private authService: AuthService, private snackBar: MatSnackBar) { }
 

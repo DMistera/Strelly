@@ -12,6 +12,7 @@ export class LoginCardComponent {
   userNameFormControl = new FormControl('', [Validators.required]);
   passwordFormControl = new FormControl('', [Validators.required, Validators.minLength(6)]);
   loading = false;
+  hide = true;
 
   constructor(private router: Router, private authService: AuthService) { }
 

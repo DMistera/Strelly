@@ -14,7 +14,8 @@
   <p>
     <mat-form-field appearance="fill" class="full-width">
       <mat-label>Password</mat-label>
-      <input matInput type="password" name="password" [formControl]="passwordFormControl">
+      <input matInput [type]="hide ? 'password' : 'text'" name="password" [formControl]="passwordFormControl">
+      <mat-icon matSuffix color="primary" (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
       <mat-error *ngIf="passwordFormControl.hasError('minlength') && !passwordFormControl.hasError('required')">
         The password should contain at least 6 characters, one uppercase letter, one lowercase letter, one number and one special character.
       </mat-error>
