@@ -9,11 +9,6 @@
     </div>
   </div>
   <div class="tasks" *ngIf="!new">
-    <app-task></app-task>
-    <app-task></app-task>
-    <app-task></app-task>
-    <app-task></app-task>
-    <app-task></app-task>
-    <app-task></app-task>
+    <app-task *ngFor="let task of tasks" [task]="task"  (deleteRequest)="removeTask(task.id)"></app-task>
   </div>
 </mat-card>

@@ -13,7 +13,7 @@ export class NewTaskDialogComponent{
     description: ['', Validators.required]
   });
 
-  constructor(public dialogRef: MatDialogRef<NewTaskDialogComponent>, private formBuilder: FormBuilder) { console.log(this.form)}
+  constructor(public dialogRef: MatDialogRef<NewTaskDialogComponent>, private formBuilder: FormBuilder) {}
 
   closeDialog() {
     if (this.form.valid) {
