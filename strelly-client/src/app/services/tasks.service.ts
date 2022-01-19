@@ -23,6 +23,12 @@ export class TasksService {
     })
   }
 
+  public deleteTasks(taskId: number) {
+    this.http.delete<any>('/api/tasks/'+taskId).subscribe(result => {
+      this.tasksSubject.next(this.tasks.filter((x:Task) => taskId != x.id));
+    })
+  }
+
   public getTasks(cloumnId?: number): Observable<Task[]> {
     if(cloumnId != null){
       return this.http.get<Task[]>('/api/tasks?columnId='+cloumnId).pipe(map(result => {
