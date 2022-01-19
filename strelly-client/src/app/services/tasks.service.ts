@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Task } from '@app/models';
+import { Column, Task } from '@app/models';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -23,14 +23,27 @@ export class TasksService {
     })
   }
 
-  public getTasks(): Observable<Task[]> {
-    return this.http.get<Task[]>('/api/tasks').pipe(map(result => {
-      console.log(result);
-      this.tasks = result.map((c: any) => {
-        return new Task(c);
-      })
-      this.tasksSubject.next(this.tasks);
-      return this.tasks;
-    }));
+  public getTasks(cloumnId?: number): Observable<Task[]> {
+    if(cloumnId != null){
+      return this.http.get<Task[]>('/api/tasks?columnId='+cloumnId).pipe(map(result => {
+        console.log(result);
+        this.tasks = result.map((c: any) => {
+          return new Task(c);
+        })
+        this.tasksSubject.next(this.tasks);
+        return this.tasks;
+      }));
+    }
+    else{
+      return this.http.get<Task[]>('/api/tasks').pipe(map(result => {
+        console.log(result);
+        this.tasks = result.map((c: any) => {
+          return new Task(c);
+        })
+        this.tasksSubject.next(this.tasks);
+        return this.tasks;
+      }));
+    }
+    
   }
 }
