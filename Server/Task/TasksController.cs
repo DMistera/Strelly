@@ -24,9 +24,13 @@ namespace Strelly
 
         // GET: api/Tasks
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TaskDTO>>> GetTask()
+        public async Task<ActionResult<IEnumerable<TaskDTO>>> GetTasks(long columnId)
         {
-            var list = await context.Task.Include(task => task.Column).Include(task => task.Assignees).ToListAsync();
+            IQueryable<Task> query = context.Task.Include(task => task.Column).Include(task => task.Assignees);
+            if(columnId > 0) {
+                query = query.Where(task => task.Column.Id == columnId);
+            }
+            var list = await query.ToListAsync();
             return Ok(list.Select(task => new TaskDTO(task)));
         }
 
