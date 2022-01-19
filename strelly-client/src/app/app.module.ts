@@ -24,6 +24,7 @@ import { AuthComponent } from './pages/auth/auth.component';
 import { NewColumnDialogComponent } from './components/new-column-dialog/new-column-dialog.component';
 import { ColumnComponent } from './components/column/column.component';
 import { TaskComponent } from './components/task/task.component';
+import { NewTaskDialogComponent } from './components/new-task-dialog/new-task-dialog.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { TaskComponent } from './components/task/task.component';
     AuthComponent,
     NewColumnDialogComponent,
     ColumnComponent,
-    TaskComponent
+    TaskComponent,
+    NewTaskDialogComponent
   ],
   imports: [
     BrowserModule,
