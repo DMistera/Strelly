@@ -16,7 +16,7 @@ export class TasksService {
 
   }
 
-  public addTasks(name: string, description: string, columnId: number){
+  public addTask(name: string, description: string, columnId: number){
     this.http.post<any>('/api/tasks', {name, description, columnId}).subscribe(result => {
       const task = new Task(result);
       this.tasks[columnId].push(task);
@@ -26,7 +26,14 @@ export class TasksService {
     });
   }
 
-  public deleteTasks(taskId: number) {
+  public editTask(task: Task, columnId: number, order: number){
+    this.http.put<any>('/api/tasks/'+task.id, {name: task.name, description: task.description, columnId: columnId, order: order}).subscribe(result => {
+      const task = new Task(result);
+      return task;
+    });
+  }
+
+  public deleteTask(taskId: number) {
     this.http.delete<any>('/api/tasks/'+taskId).subscribe(result => {
       for(let t in this.tasks){
         this.tasks[t].filter((x:Task) => taskId != x.id)
