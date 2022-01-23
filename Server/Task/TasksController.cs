@@ -28,7 +28,7 @@ namespace Strelly
         {
             IQueryable<Task> query = context.Task.Include(task => task.Column).Include(task => task.Assignees);
             if(columnId > 0) {
-                query = query.Where(task => task.Column.Id == columnId);
+                query = query.Where(task => task.Column.Id == columnId).OrderBy(task => task.Order);
             }
             var list = await query.ToListAsync();
             return Ok(list.Select(task => new TaskDTO(task)));
@@ -59,6 +59,18 @@ namespace Strelly
             }
             taskUpdate.UpdateTask(task);
             task.UpdateTime = DateTime.Now;
+            if (task.Column.Id != taskUpdate.ColumnId) {
+                if(!context.Column.Any(e => e.Id == taskUpdate.ColumnId)) {
+                    return NotFound();
+                }
+                await UpdateOrder(task.Column.Id, task.Order, await context.Task.Where(t => t.Column.Id == task.Column.Id).CountAsync());
+                await UpdateOrder(taskUpdate.ColumnId, await context.Task.Where(t => t.Column.Id == taskUpdate.ColumnId).CountAsync() + 1, taskUpdate.Order);
+                task.Column = await context.Column.FindAsync(taskUpdate.ColumnId);
+            }
+            else {
+                await UpdateOrder(task.Column.Id, task.Order, taskUpdate.Order);
+            }
+            task.Order = taskUpdate.Order;
             context.Entry(task).State = EntityState.Modified;
             await context.SaveChangesAsync();
             return Ok(new TaskDTO(task));
@@ -76,6 +88,7 @@ namespace Strelly
             }
             task.Column = column;
             task.CreateTime = DateTime.Now;
+            task.Order = await context.Task.Where(task => task.Column.Id == taskCreate.ColumnId).CountAsync() + 1;
             context.Task.Add(task);
             await context.SaveChangesAsync();
 
@@ -136,6 +149,19 @@ namespace Strelly
             await context.SaveChangesAsync();
 
             return Ok();
+        }
+        private async System.Threading.Tasks.Task UpdateOrder(long columnId, int from, int to) {
+            int increment = to > from ? -1 : 1;
+            List<Task> tasks;
+            if (from < to) {
+                tasks = await context.Task.Where(c => c.Column.Id == columnId && c.Order > from && c.Order <= to).ToListAsync();
+            } else {
+                tasks = await context.Task.Where(c => c.Column.Id == columnId && c.Order < from && c.Order >= to).ToListAsync();
+            }
+            foreach (Task task in tasks) {
+                task.Order += increment;
+                context.Entry(task).State = EntityState.Modified;
+            }
         }
     }
 }

@@ -7,6 +7,7 @@ namespace Strelly {
         public string Description { get; set; }
         [Required]
         public long ColumnId { get; set; }
+        public int Order { get; set; }
 
         public void UpdateTask(Task task) {
             task.Name = Name;

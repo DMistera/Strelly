@@ -8,5 +8,6 @@ namespace Strelly
         public long Id { get; set; }
         [Required]
         public string Name { get; set; }
+        public int Order { get; set; }
     }
 }

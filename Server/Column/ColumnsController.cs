@@ -22,7 +22,7 @@ namespace Strelly {
         // GET: api/Columns
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Column>>> GetColumn() {
-            return await context.Column.ToListAsync();
+            return await context.Column.OrderBy(column => column.Order).ToListAsync();
         }
 
         // GET: api/Columns/5
@@ -45,6 +45,8 @@ namespace Strelly {
                 Column column = context.Column.Find(id);
                 columnUpdate.UpdateColumn(column);
                 context.Entry(column).State = EntityState.Modified;
+                await UpdateOrder(column.Order, columnUpdate.Order);
+                column.Order = columnUpdate.Order;
                 await context.SaveChangesAsync();
                 return Ok(column);
             } else {
@@ -57,10 +59,26 @@ namespace Strelly {
         [HttpPost]
         public async Task<ActionResult<Column>> PostColumn(ColumnCreateUpdate columnCreate) {
             Column column = columnCreate.ToColumn();
+            column.Order = await context.Column.CountAsync() + 1;
             context.Column.Add(column);
             await context.SaveChangesAsync();
 
             return CreatedAtAction("GetColumn", new { id = column.Id }, column);
+        }
+
+        private async System.Threading.Tasks.Task UpdateOrder(int from, int to) {
+            int increment = to > from ? -1 : 1;
+            List<Column> columns;
+            if (from < to) {
+                columns = await context.Column.Where(c => c.Order > from && c.Order <= to).ToListAsync();
+            }
+            else {
+                columns = await context.Column.Where(c => c.Order < from && c.Order >= to).ToListAsync();
+            }
+            foreach (Column column in columns) {
+                column.Order += increment;
+                context.Entry(column).State = EntityState.Modified;
+            }
         }
 
         // DELETE: api/Columns/5
