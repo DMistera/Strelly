@@ -1,14 +1,37 @@
 <mat-card class="column" [ngClass]="{'column': true, 'column-new': new}">
-  <button *ngIf="new" mat-icon-button color="primary" (click)="newColumnDialog()"><mat-icon >add</mat-icon></button>
+  <button *ngIf="new" mat-icon-button style="color: gold" (click)="newColumnDialog()"><mat-icon >add</mat-icon></button>
   <div class="columns-header" *ngIf="!new">
-    <div class="column-name">
-      <mat-card-title>{{column.name}}</mat-card-title>
+    <mat-icon style="color: indigo">view_headline</mat-icon>
+    <div class="column-name flex-1">
+      <mat-card-title style="margin-bottom: 0px;">{{column.name}}</mat-card-title>
     </div>
-    <div class="column-tools">
-      <button mat-icon-button color="accent" (click)="newTask()"><mat-icon>add</mat-icon></button>
-    </div>
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+      <mat-icon>more_horiz</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu" xPosition="before" aria-label="Add task to {{column.name}}">
+        <button mat-menu-item (click)="newTask()">
+            <mat-icon style="color: limegreen">add</mat-icon>
+            <span>Add task</span>
+        </button>
+        <button mat-menu-item (click)="editColumnDialog()">
+          <mat-icon >edit</mat-icon>
+          <span>Edit column</span>
+      </button>
+        <button mat-menu-item (click)="deleteColumnDialog()">
+            <mat-icon style="color: orangered">delete</mat-icon>
+            <span>Remove column</span>
+        </button>
+    </mat-menu>
   </div>
-  <div class="tasks" *ngIf="!new">
-    <app-task *ngFor="let task of tasks" [task]="task"  (deleteRequest)="removeTask(task.id)"></app-task>
+  <div
+    cdkDropList
+    id="column-{{column.id}}"
+    [cdkDropListData]="column.tasks"
+    [cdkDropListConnectedTo]="getConnectedColumns()"
+    class="example-list tasks"
+    style="height: 95%;"
+    *ngIf="!new"
+    (cdkDropListDropped)="drop($event)">
+        <app-task class="example-box" *ngFor="let task of column.tasks" cdkDrag [task]="task"  (deleteRequest)="removeTask(task.id)"></app-task>
   </div>
 </mat-card>
