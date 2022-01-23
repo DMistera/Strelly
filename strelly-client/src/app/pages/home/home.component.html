@@ -1,9 +1,9 @@
 <app-nav-bar [appTitle]="'Strelly'" [user]="user"></app-nav-bar>
 <div class="columns-wrapper">
   <div class="columns">
-    <app-column *ngFor="let column of (columns | async)" [column]="column"></app-column>
+    <app-column *ngFor="let column of columns" [column]="column" [columns]="columns" (deleteColumnRequest)="removeColumn(column.id)"></app-column>
     <app-column [new]="true"></app-column>
   </div>
 </div>
 
-
+<!-- (columns | async) -->
