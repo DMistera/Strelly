@@ -8,6 +8,7 @@ export class Task {
     createTime: string;
     updateTime: string;
     assignees: User[];
+    order: number;
   
     constructor(object: any) {
       this.id = object?.id || 0;
@@ -16,8 +17,9 @@ export class Task {
       this.column = new Column(object?.column || '');
       this.createTime = object?.createTime || '';
       this.updateTime = object?.updateTime || '';
+      this.order = object?.order || 0;
 
       this.assignees = [];
       object?.assignees?.forEach((obj:string) => { this.assignees.push(new User(obj)); }) || [];
     }
-  }
+}
