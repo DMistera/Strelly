@@ -65,7 +65,7 @@ export class ColumnComponent implements OnChanges {
     dialogRef.afterClosed().subscribe(result => {
       // console.log(typeof(result));
       if(result) {
-        this.columnsService.editColumn(result)
+        this.columnsService.editColumn(result, result.order)
       }
     });
   }
@@ -102,6 +102,7 @@ export class ColumnComponent implements OnChanges {
   }
 
   drop(event: CdkDragDrop<any[]>) {
+    // console.log(event)
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
