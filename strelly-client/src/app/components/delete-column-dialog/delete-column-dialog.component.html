@@ -1,0 +1,12 @@
+<h1  mat-dialog-title mat-dialog-title>
+    Delete column:
+    <span style="font-weight: 300; color: orangered;">
+        {{column.name}}
+    </span>
+</h1>
+<p mat-dialog-content style="color: orangered; font-weight: 400;" >This action cannot be undone!</p>
+
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="undefined">Cancel</button>
+  <button mat-flat-button (click)="closeDialog()" style="background-color: orangered; color: white;">Delete</button>
+</mat-dialog-actions>

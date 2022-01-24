@@ -14,6 +14,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatGridListModule } from '@angular/material/grid-list';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -24,6 +27,11 @@ import { AuthComponent } from './pages/auth/auth.component';
 import { NewColumnDialogComponent } from './components/new-column-dialog/new-column-dialog.component';
 import { ColumnComponent } from './components/column/column.component';
 import { TaskComponent } from './components/task/task.component';
+import { NewTaskDialogComponent } from './components/new-task-dialog/new-task-dialog.component';
+import { EditTaskDialogComponent } from './components/edit-task-dialog/edit-task-dialog.component';
+import { EditColumnDialogComponent } from './components/edit-column-dialog/edit-column-dialog.component';
+import { DeleteColumnDialogComponent } from './components/delete-column-dialog/delete-column-dialog.component';
+import { DeleteTaskDialogComponent } from './components/delete-task-dialog/delete-task-dialog.component';
 
 
 @NgModule({
@@ -36,7 +44,12 @@ import { TaskComponent } from './components/task/task.component';
     AuthComponent,
     NewColumnDialogComponent,
     ColumnComponent,
-    TaskComponent
+    TaskComponent,
+    NewTaskDialogComponent,
+    EditTaskDialogComponent,
+    EditColumnDialogComponent,
+    DeleteColumnDialogComponent,
+    DeleteTaskDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +67,10 @@ import { TaskComponent } from './components/task/task.component';
     MatIconModule,
     MatSnackBarModule,
     MatDialogModule,
-    MatTabsModule
+    MatTabsModule,
+    MatMenuModule,
+    MatGridListModule,
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]
