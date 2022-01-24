@@ -1,8 +1,8 @@
-<mat-toolbar color="accent">
+<mat-toolbar color="primary" style="background-color: white; color: black; box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1);">
   <span>{{ appTitle }}</span>
   <span class="spacer"></span>
   <span *ngIf="user!=null" style="margin-right: 8px;">Welcome, {{user.userName}}</span>
   <button mat-icon-button aria-label="Log out" (click)="logoutUser()">
-    <mat-icon>logout</mat-icon>
+    <mat-icon style="color: orangered">logout</mat-icon>
   </button>
 </mat-toolbar>

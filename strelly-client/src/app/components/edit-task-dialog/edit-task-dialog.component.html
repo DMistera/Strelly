@@ -1,0 +1,22 @@
+<h1 mat-dialog-title>Edit task</h1>
+<form mat-dialog-content (ngSubmit)="closeDialog()" [formGroup]="form">
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Task name</mat-label>
+    <input matInput type="text" placeholder="Name" formControlName="name">
+    <mat-error *ngIf="form.controls['name'].hasError('required')">
+        Task name is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Task description</mat-label>
+    <textarea matInput type="text" placeholder="Description" formControlName="description" rows="3"></textarea>
+    <mat-error *ngIf="form.controls['description'].hasError('required')">
+        Task description is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+</form>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="undefined">Cancel</button>
+  <button mat-flat-button (click)="closeDialog()" color="accent" >Update</button>
+</mat-dialog-actions>
