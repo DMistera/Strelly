@@ -1,8 +1,17 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Column, Task, User } from '@app/models';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+
+
+const HTTP_OPTIONS = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Accept': '*/*'
+  }),
+  observe: 'response' as const
+};
 
 @Injectable({
   providedIn: 'root'
@@ -73,6 +82,8 @@ export class TasksService {
 
   public deassignUser(task: Task, user: User){
     const tempOptions = {
+      headers: HTTP_OPTIONS.headers,
+      observe: HTTP_OPTIONS.observe,
       body: JSON.stringify({
         "taskId": task.id,
         "assigneeId": user.id
