@@ -30,10 +30,11 @@ mat-card {
 }
 
 .user-icon{
+  margin-left: 0.3rem;
   font-size: 1.5em;
-  width: 1.3em;
+  width: 1.35em;
   text-align: center;
-  line-height: 1.1em;
+  line-height: 1em;
   background: rgb(247, 247, 247);
   color: #fff;
   border-radius: 0.8em;
@@ -41,7 +42,14 @@ mat-card {
   .mat-icon{
     transform: scale(0.8);
   }
+
+  &.add{
+    background: darkcyan;
+  }
 }
 .user-icon:hover{
   background: rgb(233, 233, 233);
+  &.add{
+    background: rgb(0, 100, 100);
+  }
 }

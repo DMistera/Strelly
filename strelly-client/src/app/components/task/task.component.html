@@ -17,6 +17,10 @@
                     <mat-icon style="color: darkcyan">person_add</mat-icon>
                     <span>Assign user</span>
                 </button>
+                <!-- <button mat-menu-item (click)="dismissUserDialog()">
+                    <mat-icon style="color: orangered">person_remove</mat-icon>
+                    <span>Dismiss user</span>
+                </button> -->
                 <button mat-menu-item (click)="editTaskDialog()">
                     <mat-icon>edit</mat-icon>
                     <span>Edit</span>
@@ -34,7 +38,7 @@
             <div style="text-align: left; width: 100%; height: 100%;">
                 {{"#"+task.id+" created by"}}
                 <a class="user-href" href="/tasks/{{task.id}}">
-                    {{task.assignees[0]||"User"}}
+                    {{task.creator.userName||"User"}}
                 </a>
             </div>
             
@@ -50,10 +54,21 @@
     </mat-grid-list>
 
     <div class="assigned-users">
+        <div class="user-icon add" matTooltip="Assign User" matTooltipPosition="above" aria-label="Assign User" (click)="assignUserToTaskDialog()" *ngIf="task.assignees.length<1">
+            <mat-icon style="color: white">person_add</mat-icon>
+        </div>
         <div *ngFor="let user of task.assignees">
-            <div class="user-icon" matTooltip="{{user.userName}}" matTooltipPosition="above" aria-label="User">
+            <div class="user-icon" matTooltip="{{user.userName}}" matTooltipPosition="above" aria-label="User" [matMenuTriggerFor]="menu">
                 <mat-icon style="color: black;">person</mat-icon>
             </div>
+            <mat-menu id="{{user.id}}" #menu="matMenu" xPosition="after">
+                <p style="align-items: center; text-align: center; margin: 1rem 0;">{{user.userName}}</p>
+                <hr/>
+                <button mat-menu-item (click)="dismissUser(user)">
+                    <mat-icon style="color: orangered">person_remove</mat-icon>
+                    <span>Dismiss User</span>
+                </button>
+            </mat-menu>
         </div>
     </div>
 </mat-card>
