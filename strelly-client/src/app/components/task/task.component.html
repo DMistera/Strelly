@@ -14,9 +14,14 @@
             </button>
             <mat-menu #menu="matMenu" xPosition="before">
                 <button mat-menu-item (click)="editTaskDialog()">
+                    <mat-icon style="color: darkcyan">person_add</mat-icon>
+                    <span>Assign user</span>
+                </button>
+                <button mat-menu-item (click)="editTaskDialog()">
                     <mat-icon>edit</mat-icon>
                     <span>Edit</span>
                 </button>
+                <hr/>
                 <button mat-menu-item (click)="deleteTaskDialog()">
                     <mat-icon style="color: orangered"> delete</mat-icon>
                     <span>Delete</span>
@@ -39,7 +44,16 @@
         <mat-grid-tile [colspan]="11" [rowspan]="4">
             <div style="text-align: left; width: 100%; height: 100%;">
                 {{task.description}}
+                <!-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur sit laboriosam vero magni dolorum expedita qui recusandae soluta sint odit ad vel, reiciendis eius commodi non ipsam tempore nobis fugit. -->
             </div>
         </mat-grid-tile>
     </mat-grid-list>
+
+    <div class="assigned-users">
+        <div *ngFor="let user of task.assignees">
+            <div>
+                <mat-icon style="color: black;">person</mat-icon>
+            </div>
+        </div>
+    </div>
 </mat-card>
