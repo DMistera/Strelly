@@ -16,6 +16,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatGridListModule } from '@angular/material/grid-list';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatTooltipModule} from '@angular/material/tooltip';
+
 import {DragDropModule} from '@angular/cdk/drag-drop';
 
 import { AppComponent } from './app.component';
@@ -32,6 +35,7 @@ import { EditTaskDialogComponent } from './components/edit-task-dialog/edit-task
 import { EditColumnDialogComponent } from './components/edit-column-dialog/edit-column-dialog.component';
 import { DeleteColumnDialogComponent } from './components/delete-column-dialog/delete-column-dialog.component';
 import { DeleteTaskDialogComponent } from './components/delete-task-dialog/delete-task-dialog.component';
+import { AssignUserDialogComponent } from './components/assign-user-dialog/assign-user-dialog.component';
 
 
 @NgModule({
@@ -49,7 +53,8 @@ import { DeleteTaskDialogComponent } from './components/delete-task-dialog/delet
     EditTaskDialogComponent,
     EditColumnDialogComponent,
     DeleteColumnDialogComponent,
-    DeleteTaskDialogComponent
+    DeleteTaskDialogComponent,
+    AssignUserDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -70,6 +75,8 @@ import { DeleteTaskDialogComponent } from './components/delete-task-dialog/delet
     MatTabsModule,
     MatMenuModule,
     MatGridListModule,
+    MatAutocompleteModule,
+    MatTooltipModule,
     DragDropModule
   ],
   providers: [],

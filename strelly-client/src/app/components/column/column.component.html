@@ -10,18 +10,22 @@
     <div class="column-name flex-1">
       <mat-card-title style="margin-bottom: 0px;">{{column.name}}</mat-card-title>
     </div>
+    <button mat-icon-button aria-label="Add Task button" (click)="newTask()">
+      <mat-icon style="color: darkcyan">add</mat-icon>
+    </button>
     <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
       <mat-icon>more_horiz</mat-icon>
     </button>
     <mat-menu #menu="matMenu" xPosition="before" aria-label="Add task to {{column.name}}">
-        <button mat-menu-item (click)="newTask()">
-            <mat-icon style="color: limegreen">add</mat-icon>
+        <!-- <button mat-menu-item (click)="newTask()">
+            <mat-icon style="color: darkcyan">add</mat-icon>
             <span>Add task</span>
-        </button>
+        </button> -->
         <button mat-menu-item (click)="editColumnDialog()">
           <mat-icon >edit</mat-icon>
           <span>Edit column</span>
-      </button>
+        </button>
+        <hr/>
         <button mat-menu-item (click)="deleteColumnDialog()">
             <mat-icon style="color: orangered">delete</mat-icon>
             <span>Remove column</span>

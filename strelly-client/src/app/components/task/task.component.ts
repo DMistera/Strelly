@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TasksService } from '@app/services/tasks.service';
-import { Task } from '@app/models';
+import { Task, User } from '@app/models';
 import { MatDialog } from '@angular/material/dialog';
 import { EditTaskDialogComponent } from '../edit-task-dialog/edit-task-dialog.component';
 import { DeleteTaskDialogComponent } from '../delete-task-dialog/delete-task-dialog.component';
+import { AssignUserDialogComponent } from '../assign-user-dialog/assign-user-dialog.component';
 
 @Component({
   selector: 'app-task',
@@ -31,6 +32,33 @@ export class TaskComponent implements OnInit {
         this.tasksService.editTask(result, this.task.column.id, this.task.order);
       }
     });
+  }
+
+  assignUserToTaskDialog(){
+    const dialogRef = this.dialog.open(AssignUserDialogComponent,{data: this.task});
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(typeof(result));
+      if(result) {
+        this.tasksService.assignUser(this.task, result);
+        this.task.assignees.push(result);
+      }
+    });
+  }
+
+  // dismissUserDialog(){
+  //   const dialogRef = this.dialog.open(DismissUserDialogComponent,{data: this.task});
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     console.log(typeof(result));
+  //     if(result) {
+  //       this.tasksService.deassignUser(this.task, result);
+  //     }
+  //   });
+  // }
+
+
+  dismissUser(user: User){
+    this.tasksService.deassignUser(this.task, user);
+    this.task.assignees = this.task.assignees.filter((u: User)=>u.id!=user.id);
   }
 
   deleteTaskDialog(){

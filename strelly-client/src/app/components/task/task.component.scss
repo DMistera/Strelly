@@ -19,3 +19,37 @@ mat-card {
 .user-href:hover{
   text-decoration: underline black;
 }
+
+.assigned-users{
+  justify-content: flex-end;
+  display: flex;
+  flex-grow: 1;
+  justify-content: flex-end; 
+  align-content: flex-end;
+  padding-right: 0.1rem;
+}
+
+.user-icon{
+  margin-left: 0.3rem;
+  font-size: 1.5em;
+  width: 1.35em;
+  text-align: center;
+  line-height: 1em;
+  background: rgb(247, 247, 247);
+  color: #fff;
+  border-radius: 0.8em;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4);
+  .mat-icon{
+    transform: scale(0.8);
+  }
+
+  &.add{
+    background: darkcyan;
+  }
+}
+.user-icon:hover{
+  background: rgb(233, 233, 233);
+  &.add{
+    background: rgb(0, 100, 100);
+  }
+}

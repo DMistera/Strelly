@@ -9,6 +9,7 @@ export class Task {
     updateTime: string;
     assignees: User[];
     order: number;
+    creator: User;
   
     constructor(object: any) {
       this.id = object?.id || 0;
@@ -18,6 +19,7 @@ export class Task {
       this.createTime = object?.createTime || '';
       this.updateTime = object?.updateTime || '';
       this.order = object?.order || 0;
+      this.creator = new User(object?.creator||'')
 
       this.assignees = [];
       object?.assignees?.forEach((obj:string) => { this.assignees.push(new User(obj)); }) || [];
