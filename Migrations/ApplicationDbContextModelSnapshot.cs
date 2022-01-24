@@ -298,6 +298,9 @@ namespace Strelly.Migrations
                     b.Property<DateTime>("CreateTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<long>("CreatorId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -315,6 +318,8 @@ namespace Strelly.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ColumnId");
+
+                    b.HasIndex("CreatorId");
 
                     b.ToTable("Task");
                 });
@@ -412,7 +417,15 @@ namespace Strelly.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Strelly.ApplicationUser", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.Navigation("Column");
+
+                    b.Navigation("Creator");
                 });
 #pragma warning restore 612, 618
         }

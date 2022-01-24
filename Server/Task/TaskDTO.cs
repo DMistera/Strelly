@@ -7,6 +7,7 @@
         public Column Column { get; set; }
         public DateTime CreateTime { get; set; }
         public DateTime UpdateTime { get; set; }
+        public ApplicationUserDTO Creator { get; set; }
         public IEnumerable<ApplicationUserDTO> Assignees { get; set; }
         public int Order { get; set; }
 
@@ -17,6 +18,7 @@
             Column = task.Column;
             CreateTime = task.CreateTime;
             UpdateTime = task.UpdateTime;
+            Creator = new ApplicationUserDTO(task.Creator);
             Assignees = task.Assignees == null ? null : task.Assignees.Select(assignee => new ApplicationUserDTO(assignee));
             Order = task.Order;
         }
