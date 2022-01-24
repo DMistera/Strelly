@@ -5,6 +5,7 @@ import { User } from '@app/models/User';
 import { Column } from '@app/models/Column';
 import { AuthService } from '@app/services/auth.service';
 import { ThrowStmt } from '@angular/compiler';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-home',
@@ -33,5 +34,20 @@ export class HomeComponent implements OnInit {
     if(this.columns){
       this.columns = this.columns?.filter((c:Column)=> c.id != columnId)
     }
+  }
+
+  drop(event: CdkDragDrop<any[]>) {
+    // console.log(event);
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
+    }
+    this.columnsService.editColumn(event.container.data[event.currentIndex], event.currentIndex+1)
   }
 }
