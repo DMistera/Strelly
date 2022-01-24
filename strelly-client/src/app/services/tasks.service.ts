@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { TaskComponent } from '@app/components/task/task.component';
-import { Column, Task } from '@app/models';
+import { Column, Task, User } from '@app/models';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -63,5 +62,26 @@ export class TasksService {
         return this.tasks;
       }));
     }
+  }
+
+  public assignUser(task: Task, user: User){
+    this.http.post<any>('/api/tasks/assigns', {taskId: task.id, assigneeId: user.id}).subscribe(result => {
+      const task = new Task(result);
+      return task;
+    });
+  }
+
+  public deassignUser(task: Task, user: User){
+    const tempOptions = {
+      body: JSON.stringify({
+        "taskId": task.id,
+        "assigneeId": user.id
+      })
+    };
+
+    this.http.delete<any>('/api/tasks/assigns', tempOptions).subscribe(result => {
+      const task = new Task(result);
+      return task;
+    });
   }
 }
