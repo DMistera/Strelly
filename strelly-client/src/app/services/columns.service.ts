@@ -27,10 +27,11 @@ export class ColumnsService {
     })
   }
 
-  public editColumn(column: Column) {
-    this.http.put<any>('/api/columns/'+column.id, column).subscribe(result => {
+  public editColumn(column: Column, order: number) {
+    this.http.put<any>('/api/columns/'+column.id, {name: column.name, order: order}).subscribe(result => {
       let index = this.columns.findIndex((element: Column)=> element.id === column.id);
-      this.columns[index] = new Column(result);
+      this.columns[index].order = result.order;
+      this.columns[index].name = result.name;
       this.updateColumns(this.columns);
     })
   }
@@ -50,7 +51,6 @@ export class ColumnsService {
 
   public getColumns(){
     return this.http.get<Column[]>('/api/columns').pipe(map(result => {
-      // console.log(result);
       this.columns = result.map((c: any) => {
         return new Column(c);
       })

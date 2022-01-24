@@ -5,14 +5,20 @@
   flex-basis: 1;
   min-width: 350px;
   height: 100%;
-  margin: 0 8px;
+  display: flex;
+  flex-flow: column;
   box-sizing: border-box;
   &.column-new {
     display: flex;
     justify-content: center;
     align-items: center;
-    & button {
-      transform: scale(3);
+    flex-grow: 1;
+    & .wrapper{
+      display: flex;
+      align-items: center;
+      & button {
+        transform: scale(3);
+      }
     }
   }
 }
@@ -27,10 +33,18 @@
   align-items: center;
 }
 
+.tasks-wrapper{
+  overflow: hidden;
+  box-sizing: border-box;
+  display: flex;
+  flex-grow: 1;
+}
 
 .example-list {
-  min-height: 60px;
   overflow: hidden;
+  box-sizing: border-box;
+  flex-grow: 1;
+  overflow-y: auto;
   display: block;
 }
 

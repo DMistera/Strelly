@@ -1,5 +1,10 @@
 <mat-card class="column" [ngClass]="{'column': true, 'column-new': new}">
-  <button *ngIf="new" mat-icon-button style="color: gold" (click)="newColumnDialog()"><mat-icon >add</mat-icon></button>
+  <div class="wrapper" *ngIf="new">
+    <button  mat-icon-button style="color: gold" (click)="newColumnDialog()">
+      <mat-icon >add</mat-icon>
+    </button>
+  </div>
+  
   <div class="columns-header" *ngIf="!new">
     <mat-icon style="color: indigo">view_headline</mat-icon>
     <div class="column-name flex-1">
@@ -23,15 +28,15 @@
         </button>
     </mat-menu>
   </div>
-  <div
-    cdkDropList
-    id="column-{{column.id}}"
-    [cdkDropListData]="column.tasks"
-    [cdkDropListConnectedTo]="getConnectedColumns()"
-    class="example-list tasks"
-    style="height: 95%;"
-    *ngIf="!new"
-    (cdkDropListDropped)="drop($event)">
-        <app-task class="example-box" *ngFor="let task of column.tasks" cdkDrag [task]="task"  (deleteRequest)="removeTask(task.id)"></app-task>
+  <div class="tasks-wrapper" *ngIf="!new">
+    <div
+      cdkDropList
+      id="column-{{column.id}}"
+      [cdkDropListData]="column.tasks"
+      [cdkDropListConnectedTo]="getConnectedColumns()"
+      class="example-list"
+      (cdkDropListDropped)="drop($event)">
+          <app-task class="example-box" *ngFor="let task of column.tasks" cdkDrag [task]="task"  (deleteRequest)="removeTask(task.id)"></app-task>
+    </div>
   </div>
 </mat-card>

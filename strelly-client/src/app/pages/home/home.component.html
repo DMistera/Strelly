@@ -1,9 +1,16 @@
 <app-nav-bar [appTitle]="'Strelly'" [user]="user"></app-nav-bar>
 <div class="columns-wrapper">
-  <div class="columns">
-    <app-column *ngFor="let column of columns" [column]="column" [columns]="columns" (deleteColumnRequest)="removeColumn(column.id)"></app-column>
-    <app-column [new]="true"></app-column>
+  <div class="columns" *ngIf="columns">
+    <div
+      cdkDropList
+      cdkDropListOrientation="horizontal"
+      id="row-0"
+      [cdkDropListData]="columns"
+      [cdkDropListConnectedTo]="['row-0']"
+      class="example-list rows"
+      (cdkDropListDropped)="drop($event)">
+        <app-column class="example-box" *ngFor="let column of columns" [column]="column" [columns]="columns" cdkDrag (deleteColumnRequest)="removeColumn(column.id)"></app-column>
+    </div>
+    <app-column style="margin: 0 8px;" [new]="true"></app-column>
   </div>
 </div>
-
-<!-- (columns | async) -->
