@@ -56,7 +56,8 @@ namespace Strelly.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Order = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -179,11 +180,18 @@ namespace Strelly.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ColumnId = table.Column<long>(type: "bigint", nullable: false),
                     CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    UpdateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatorId = table.Column<long>(type: "bigint", nullable: false),
+                    Order = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Task", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Task_AspNetUsers_CreatorId",
+                        column: x => x.CreatorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Task_Column_ColumnId",
                         column: x => x.ColumnId,
@@ -299,6 +307,11 @@ namespace Strelly.Migrations
                 name: "IX_Task_ColumnId",
                 table: "Task",
                 column: "ColumnId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Task_CreatorId",
+                table: "Task",
+                column: "CreatorId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -328,10 +341,10 @@ namespace Strelly.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Task");
 
             migrationBuilder.DropTable(
-                name: "Task");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Column");

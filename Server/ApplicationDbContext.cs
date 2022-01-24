@@ -37,6 +37,10 @@ namespace Strelly {
                 .WithMany()
                 .OnDelete(DeleteBehavior.NoAction);
 
+            builder.Entity<Task>()
+                .HasOne(task => task.Creator)
+                .WithMany()
+                .OnDelete(DeleteBehavior.NoAction);
         }
 
         public DbSet<Column> Column { get; set; }

@@ -26,7 +26,7 @@ namespace Strelly
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TaskDTO>>> GetTasks(long columnId)
         {
-            IQueryable<Task> query = context.Task.Include(task => task.Column).Include(task => task.Assignees);
+            IQueryable<Task> query = context.Task.Include(task => task.Column).Include(task => task.Assignees).Include(task => task.Creator);
             if(columnId > 0) {
                 query = query.Where(task => task.Column.Id == columnId).OrderBy(task => task.Order);
             }
@@ -38,7 +38,7 @@ namespace Strelly
         [HttpGet("{id}")]
         public async Task<ActionResult<TaskDTO>> GetTask(long id)
         {
-            var task = await context.Task.Include(task => task.Column).Include(task => task.Assignees).FirstOrDefaultAsync(task => task.Id == id);
+            var task = await context.Task.Include(task => task.Column).Include(task => task.Assignees).Include(task => task.Creator).FirstOrDefaultAsync(task => task.Id == id);
 
             if (task == null)
             {
@@ -53,7 +53,7 @@ namespace Strelly
         [HttpPut("{id}")]
         public async Task<ActionResult<TaskDTO>> PutTask(long id, TaskCreateUpdate taskUpdate)
         {
-            Task task = await context.Task.Include(task => task.Column).Include(task => task.Assignees).FirstOrDefaultAsync(task => task.Id == id);
+            Task task = await context.Task.Include(task => task.Column).Include(task => task.Assignees).Include(task => task.Creator).FirstOrDefaultAsync(task => task.Id == id);
             if(task == null) {
                 return NotFound();
             }
@@ -89,6 +89,7 @@ namespace Strelly
             task.Column = column;
             task.CreateTime = DateTime.Now;
             task.Order = await context.Task.Where(task => task.Column.Id == taskCreate.ColumnId).CountAsync() + 1;
+            task.Creator = await userManager.GetUserAsync(User);
             context.Task.Add(task);
             await context.SaveChangesAsync();
 
@@ -97,10 +98,8 @@ namespace Strelly
 
         [HttpPost("assigns")]
         public async Task<ActionResult<TaskDTO>> AssignTask(TaskAssignment taskAssigment) {
-            var taskAsync = context.Task.Include(task => task.Column).Include(task => task.Assignees).FirstOrDefaultAsync(task => task.Id == taskAssigment.TaskId);
-            var applicationUserAsync = userManager.FindByIdAsync(taskAssigment.AssigneeId.ToString());
-            Task task = await taskAsync;
-            ApplicationUser applicationUser = await applicationUserAsync;
+            Task task = await context.Task.Include(task => task.Column).Include(task => task.Assignees).Include(task => task.Creator).FirstOrDefaultAsync(task => task.Id == taskAssigment.TaskId);
+            ApplicationUser applicationUser = await userManager.FindByIdAsync(taskAssigment.AssigneeId.ToString());
             if (task == null) {
                 return NotFound();
             }
@@ -117,7 +116,7 @@ namespace Strelly
 
         [HttpDelete("assigns")]
         public async Task<ActionResult<TaskDTO>> UnassignTask(TaskAssignment taskAssigment) {
-            Task task = await context.Task.Include(task => task.Assignees).FirstOrDefaultAsync(task => task.Id == taskAssigment.TaskId);
+            Task task = await context.Task.Include(task => task.Assignees).Include(task => task.Creator).FirstOrDefaultAsync(task => task.Id == taskAssigment.TaskId);
             if (task == null) {
                 return NotFound("TaskId");
             }
