@@ -24,6 +24,12 @@ namespace Strelly {
         }
 
         [HttpGet]
+        public async Task<ActionResult<IEnumerable<ApplicationUserDTO>>> GetUsers() {
+            var users = await dbContext.Users.ToListAsync();
+            return Ok(users.Select(user => new ApplicationUserDTO(user)));
+        }
+
+        [HttpGet("Logged")]
         public async Task<ActionResult<ApplicationUserDTO>> GetLoggedUser() {
             var user = await userManager.GetUserAsync(User);
             if (user == null) {
