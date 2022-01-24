@@ -112,7 +112,7 @@ export class AuthService {
   }
 
   getUserData(): Observable<HttpResponse<any>>{
-    return this.http.get<any>(`/api/Users/`, HTTP_OPTIONS).pipe(map(data => {
+    return this.http.get<any>(`/api/Users/Logged`, HTTP_OPTIONS).pipe(map(data => {
       console.log({getUserData: data.status})
       if(data.status == 200){
         this.userLoggedInSubject.next(true);
