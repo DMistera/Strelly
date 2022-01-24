@@ -16,6 +16,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatGridListModule } from '@angular/material/grid-list';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatTooltipModule} from '@angular/material/tooltip';
+
 import {DragDropModule} from '@angular/cdk/drag-drop';
 
 import { AppComponent } from './app.component';
@@ -72,6 +75,8 @@ import { AssignUserDialogComponent } from './components/assign-user-dialog/assig
     MatTabsModule,
     MatMenuModule,
     MatGridListModule,
+    MatAutocompleteModule,
+    MatTooltipModule,
     DragDropModule
   ],
   providers: [],
