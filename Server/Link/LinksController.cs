@@ -22,9 +22,19 @@ namespace Strelly
 
         // GET: api/Links
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<LinkDTO>>> GetLink()
+        public async Task<ActionResult<IEnumerable<LinkDTO>>> GetLink(long fromTaskId, long toTaskId, long taskId)
         {
-            var list = await context.Link.Include(link => link.FromTask).Include(link => link.ToTask).ToListAsync();
+            IQueryable<Link> query = context.Link.Include(link => link.FromTask).Include(link => link.ToTask);
+            if(fromTaskId > 0) {
+                query = query.Where(link => link.FromTask.Id == fromTaskId);
+            }
+            if (toTaskId > 0) {
+                query = query.Where(link => link.ToTask.Id == toTaskId);
+            }
+            if (taskId > 0) {
+                query = query.Where(link => link.FromTask.Id == fromTaskId || link.ToTask.Id == toTaskId);
+            }
+            var list = await query.ToListAsync();
             return Ok(list.Select(link => new LinkDTO(link)));
         }
 
