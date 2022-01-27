@@ -32,7 +32,7 @@ namespace Strelly
                 query = query.Where(link => link.ToTask.Id == toTaskId);
             }
             if (taskId > 0) {
-                query = query.Where(link => link.FromTask.Id == fromTaskId || link.ToTask.Id == toTaskId);
+                query = query.Where(link => link.FromTask.Id == taskId || link.ToTask.Id == taskId);
             }
             var list = await query.ToListAsync();
             return Ok(list.Select(link => new LinkDTO(link)));
