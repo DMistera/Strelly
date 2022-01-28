@@ -73,15 +73,15 @@ export class TaskDetailsDialogComponent implements OnInit {
     );
     dialogRef.afterClosed().subscribe(result => {
       console.log(typeof(result));
-      this.isHidden = false;
+      
       if(result) {
         this.dialogRef.close({deleteRequest: true});
       }
+      else{
+        this.isHidden = false;
+      }
     });
   }
-
-  
-
 
   assignUserToTaskDialog(){
     console.log('assign user');
