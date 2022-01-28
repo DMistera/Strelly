@@ -1,0 +1,151 @@
+<div class="details-container" [class.hide]="isHidden==true">
+    <header class="details-header">
+        <div class="item">
+            <mat-icon style="color: darkcyan;">event</mat-icon>
+        </div>
+        <div class="item grow">
+            <div class="title">
+                {{task.name}}
+            </div> 
+        </div>
+        <button mat-flat-button class="item" (click)="editTaskDialog()">
+            <mat-icon>edit</mat-icon>
+            <!-- <span>Edit</span> -->
+        </button>
+        <button mat-flat-button class="item" (click)="deleteTaskDialog()">
+            <mat-icon style="color: orangered"> delete</mat-icon>
+            <!-- <span>Delete</span> -->
+        </button>
+    </header>
+
+
+    <div class="details-content">
+        <div class="row">
+            <!-- <div style="display: flex; width: 10%; align-items: flex-start; padding-right: 1rem;">
+                <div class="content-item">
+                    <div class="custom-icon-container">
+                        <mat-icon>grid_3x3</mat-icon>
+                        <div class="field-description">
+                            ID:
+                        </div>
+                    </div>
+                    <div class="value">
+                        <span>{{task.id}}</span>
+                    </div>
+                </div>
+            </div> -->
+            <div style="display: flex; flex-grow: 1;">
+                <div class="content-item">
+                    <div class="custom-icon-container">
+                        <mat-icon>person</mat-icon>
+                        <!-- <div class="field-description">
+                            Creator: 
+                        </div> -->
+                    </div>
+                    <div class="value">
+                        <span>{{task.creator.userName}}</span>
+                    </div>  
+                </div>
+            </div>
+            <div style="display: flex;">
+                <div class="content-item">
+                    <div class="custom-icon-container">
+                        <mat-icon>history</mat-icon>
+                        <!-- <div class="field-description">
+                            Created: 
+                        </div> -->
+                    </div>
+                    <div class="value">
+                        <span>{{task.createTime.split("T")[0]}}</span>
+                         <!-- <br/> -->{{" "}}
+                        <span>{{task.createTime.split("T")[1].split('.')[0]}}</span>
+                    </div>  
+                </div>
+            </div>
+            <div style="display: flex;">
+                <div class="content-item">
+                    <div class="custom-icon-container">
+                        <mat-icon>update</mat-icon>
+                        <!-- <div class="field-description">
+                            Updated: 
+                        </div> -->
+                    </div>
+                    <div class="value">
+                        <span>{{task.updateTime.split("T")[0]}}</span>
+                         <!-- <br/> -->{{" "}}
+                        <span>{{task.updateTime.split("T")[1].split('.')[0]}}</span>
+                    </div>  
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row" style="margin-bottom: 1rem;">
+            <div style="text-align: left; width: 100%; height: 100%;">
+                <div style="font-weight: 500; font-size: 18px; border-bottom: solid black 1px; margin-bottom: 0.5rem; height: 40px; justify-content: flex-start; align-content: center; align-items: center; display: flex;">
+                    Description
+                </div>
+                <div>{{task.description}}</div>
+                
+            </div>
+        </div>
+        
+        <div class="row" style="margin-bottom: 0.5rem;">
+            <div style="display: flex; align-items:center; font-weight: 400; font-size: 18px; margin-bottom: 0.5rem; margin-right: 1rem;">
+                Assigned users:
+            </div>
+            <div class="assigned-users">
+                <div *ngFor="let user of task.assignees">
+                    <!-- [matMenuTriggerFor]="menu"  matTooltip="{{user.userName}}" matTooltipPosition="above" -->
+                    <div class="user-icon" aria-label="User" >
+                        <mat-icon>person</mat-icon>
+                        <div class="text-description">{{user.userName}}</div>
+                    </div>
+                    <!-- <mat-menu id="{{user.id}}" #menu="matMenu" xPosition="after">
+                        <p style="align-items: center; text-align: center; margin: 1rem 0;">{{user.userName}}</p>
+                        <hr/>
+                        <button mat-menu-item (click)="dismissUser(user)">
+                            <mat-icon style="color: orangered">person_remove</mat-icon>
+                            <span>Dismiss User</span>
+                        </button>
+                    </mat-menu> -->
+                </div>
+                <div class="user-icon add" aria-label="Assign User" (click)="assignUserToTaskDialog()">
+                    <mat-icon style="color: white">add</mat-icon>
+                    <div class="text-description">Assign</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div style="display: flex; align-items:center; font-weight: 400; font-size: 18px; margin-bottom: 0.5rem; margin-right: 1rem;">
+                Linked tasks:
+            </div>
+            <div class="linked-tasks">
+                <div *ngFor="let link of links">
+                    <!-- [matMenuTriggerFor]="menu"  matTooltip="{{user.userName}}" matTooltipPosition="above" -->
+                    <div class="task-link-icon" [class.block]="link.isBlocking()" [class.relate]="link.isRelating()" aria-label="Task Link" >
+                        <mat-icon *ngIf="link.isBlocking()">block</mat-icon>
+                        <mat-icon *ngIf="link.isRelating()">link</mat-icon>
+                        <div class="text-description">Link {{link.id}}</div>
+                    </div>
+                    <!-- <mat-menu id="{{user.id}}" #menu="matMenu" xPosition="after">
+                        <p style="align-items: center; text-align: center; margin: 1rem 0;">{{user.userName}}</p>
+                        <hr/>
+                        <button mat-menu-item (click)="dismissUser(user)">
+                            <mat-icon style="color: orangered">remove</mat-icon>
+                            <span>Dismiss User</span>
+                        </button>
+                    </mat-menu> -->
+                </div>
+                <div class="task-link-icon add" aria-label="Link task" (click)="assignUserToTaskDialog()">
+                    <mat-icon style="color: white">add</mat-icon>
+                    <div class="text-description">Link</div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
