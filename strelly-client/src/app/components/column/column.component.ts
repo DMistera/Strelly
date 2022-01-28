@@ -51,7 +51,14 @@ export class ColumnComponent implements OnChanges {
   }
 
   newColumnDialog() {
-    const dialogRef = this.dialog.open(NewColumnDialogComponent);
+    const dialogRef = this.dialog.open(NewColumnDialogComponent,
+      {
+        maxWidth: '600px',
+        width: '80vw',
+        autoFocus: false,
+        panelClass: 'custom-dialog-container',
+      }
+    );
     dialogRef.afterClosed().subscribe(result => {
       // console.log(typeof(result));
       if(result) {
@@ -61,7 +68,15 @@ export class ColumnComponent implements OnChanges {
   }
 
   editColumnDialog() {
-    const dialogRef = this.dialog.open(EditColumnDialogComponent,{data: this.column});
+    const dialogRef = this.dialog.open(EditColumnDialogComponent,
+      {
+        maxWidth: '600px',
+        width: '80vw',
+        autoFocus: false,
+        panelClass: 'custom-dialog-container',
+        data: this.column
+      }
+    );
     dialogRef.afterClosed().subscribe(result => {
       // console.log(typeof(result));
       if(result) {
@@ -71,7 +86,15 @@ export class ColumnComponent implements OnChanges {
   }
 
   deleteColumnDialog() {
-    const dialogRef = this.dialog.open(DeleteColumnDialogComponent, {data: this.column});
+    const dialogRef = this.dialog.open(DeleteColumnDialogComponent, 
+      {
+        maxWidth: '600px',
+        width: '80vw',
+        autoFocus: false,
+        panelClass: 'custom-dialog-container',
+        data: this.column
+      }
+    );
     dialogRef.afterClosed().subscribe(result => {
       // console.log(typeof(result));
       if(result) {
@@ -82,7 +105,14 @@ export class ColumnComponent implements OnChanges {
   }
 
   newTask() {
-    const dialogRef = this.dialog.open(NewTaskDialogComponent);
+    const dialogRef = this.dialog.open(NewTaskDialogComponent,
+      {
+        maxWidth: '600px',
+        width: '80vw',
+        autoFocus: false,
+        panelClass: 'custom-dialog-container',
+      }
+    );
     dialogRef.afterClosed().subscribe(result => {
       // console.log(typeof(result));
       if(result) {

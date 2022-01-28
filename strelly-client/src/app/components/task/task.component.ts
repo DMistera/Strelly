@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditTaskDialogComponent } from '../edit-task-dialog/edit-task-dialog.component';
 import { DeleteTaskDialogComponent } from '../delete-task-dialog/delete-task-dialog.component';
 import { AssignUserDialogComponent } from '../assign-user-dialog/assign-user-dialog.component';
+import { TaskDetailsDialogComponent } from '../task-details-dialog/task-details-dialog.component';
 
 @Component({
   selector: 'app-task',
@@ -15,6 +16,8 @@ export class TaskComponent implements OnInit {
   @Input() task: Task;
   @Output() public deleteRequest: EventEmitter<any> = new EventEmitter<any>();
 
+  maxUsersNumber = 5;
+
   constructor(private tasksService: TasksService, public dialog: MatDialog) {
     if(!this.task){
       this.task = new Task("");
@@ -24,8 +27,38 @@ export class TaskComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  taskDetailsDialog(){
+    const dialogRef = this.dialog.open(TaskDetailsDialogComponent,{
+      maxWidth: '1000px',
+      width: '90vw',
+      autoFocus: false,
+      panelClass: 'custom-dialog-container',
+      data: this.task
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if(result.deleteRequest == true){
+        this.tasksService.deleteTask(this.task.id);
+        this.deleteRequest.emit();
+      }
+      else if(result.editRequest ==true){
+        this.tasksService.editTask(result.data, this.task.column.id, this.task.order);
+      }
+    });
+    console.log("details");
+    
+  }
+
   editTaskDialog(){
-    const dialogRef = this.dialog.open(EditTaskDialogComponent,{data: this.task});
+    const dialogRef = this.dialog.open(EditTaskDialogComponent,
+      {
+        maxWidth: '600px',
+        width: '80vw',
+        autoFocus: false,
+        panelClass: 'custom-dialog-container',
+        data: this.task
+      }
+    );
     dialogRef.afterClosed().subscribe(result => {
       console.log(typeof(result));
       if(result) {
@@ -35,7 +68,15 @@ export class TaskComponent implements OnInit {
   }
 
   assignUserToTaskDialog(){
-    const dialogRef = this.dialog.open(AssignUserDialogComponent,{data: this.task});
+    const dialogRef = this.dialog.open(AssignUserDialogComponent,
+      {
+        maxWidth: '600px',
+        width: '80vw',
+        autoFocus: false,
+        panelClass: 'custom-dialog-container',
+        data: this.task
+      }
+    );
     dialogRef.afterClosed().subscribe(result => {
       console.log(typeof(result));
       if(result) {
@@ -62,7 +103,15 @@ export class TaskComponent implements OnInit {
   }
 
   deleteTaskDialog(){
-    const dialogRef = this.dialog.open(DeleteTaskDialogComponent, {data: this.task});
+    const dialogRef = this.dialog.open(DeleteTaskDialogComponent, 
+      {
+        maxWidth: '600px',
+        width: '80vw',
+        autoFocus: false,
+        panelClass: 'custom-dialog-container',
+        data: this.task
+      }
+    );
     dialogRef.afterClosed().subscribe(result => {
       console.log(typeof(result));
       if(result) {

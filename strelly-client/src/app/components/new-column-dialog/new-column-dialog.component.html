@@ -1,14 +1,27 @@
-<h1 mat-dialog-title>New column</h1>
-<form mat-dialog-content (ngSubmit)="closeDialog()">
-  <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Column name</mat-label>
-    <input matInput type="text" placeholder="To do" [formControl]="nameFormControl">
-    <mat-error *ngIf="nameFormControl.hasError('required')">
-      Column name is <strong>required</strong>
-    </mat-error>
-  </mat-form-field>
-</form>
-<mat-dialog-actions align="end">
-  <button mat-button [mat-dialog-close]="undefined">Cancel</button>
-  <button mat-flat-button (click)="closeDialog()" style="background-color: darkcyan; color: white;">Add</button>
-</mat-dialog-actions>
+<div class="form-wrapper">
+  <div class="form-header">
+    <div class="item">
+      <mat-icon style="color: darkcyan;">add</mat-icon>
+    </div>
+    <div class="item grow">
+      New column
+    </div>
+  </div>  
+  <div class="form-content">
+    <form mat-dialog-content (ngSubmit)="closeDialog()" style="margin: 0; padding: 0;">
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Column name</mat-label>
+        <input matInput type="text" placeholder="To do" [formControl]="nameFormControl">
+        <mat-error *ngIf="nameFormControl.hasError('required')">
+          Column name is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </form>
+    <mat-dialog-actions align="end">
+      <button mat-button [mat-dialog-close]="undefined">Cancel</button>
+      <button mat-flat-button (click)="closeDialog()" style="background-color: darkcyan; color: white;">Add</button>
+    </mat-dialog-actions>
+  </div>
+</div>
+
+

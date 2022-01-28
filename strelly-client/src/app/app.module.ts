@@ -36,6 +36,7 @@ import { EditColumnDialogComponent } from './components/edit-column-dialog/edit-
 import { DeleteColumnDialogComponent } from './components/delete-column-dialog/delete-column-dialog.component';
 import { DeleteTaskDialogComponent } from './components/delete-task-dialog/delete-task-dialog.component';
 import { AssignUserDialogComponent } from './components/assign-user-dialog/assign-user-dialog.component';
+import { TaskDetailsDialogComponent } from './components/task-details-dialog/task-details-dialog.component';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { AssignUserDialogComponent } from './components/assign-user-dialog/assig
     EditColumnDialogComponent,
     DeleteColumnDialogComponent,
     DeleteTaskDialogComponent,
-    AssignUserDialogComponent
+    AssignUserDialogComponent,
+    TaskDetailsDialogComponent
   ],
   imports: [
     BrowserModule,

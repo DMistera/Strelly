@@ -13,6 +13,11 @@
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu" xPosition="before">
+                <button mat-menu-item (click)="taskDetailsDialog()">
+                    <mat-icon >info_outlined</mat-icon>
+                    <span>Details</span>
+                </button>
+                <hr/>
                 <button mat-menu-item (click)="assignUserToTaskDialog()">
                     <mat-icon style="color: darkcyan">person_add</mat-icon>
                     <span>Assign user</span>
@@ -46,7 +51,7 @@
 
         <mat-grid-tile [colspan]="1" [rowspan]="1"> </mat-grid-tile>
         <mat-grid-tile [colspan]="11" [rowspan]="3">
-            <div style="text-align: left; width: 100%; height: 100%;">
+            <div style="text-align: left; width: 100%; height: auto;  overflow: hidden; text-overflow: ellipsis; max-height: 3.6em; line-height: 1.2em;">
                 {{task.description}}
                 <!-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur sit laboriosam vero magni dolorum expedita qui recusandae soluta sint odit ad vel, reiciendis eius commodi non ipsam tempore nobis fugit. -->
             </div>
@@ -57,7 +62,10 @@
         <div class="user-icon add" matTooltip="Assign User" matTooltipPosition="above" aria-label="Assign User" (click)="assignUserToTaskDialog()" *ngIf="task.assignees.length<1">
             <mat-icon style="color: white">person_add</mat-icon>
         </div>
-        <div *ngFor="let user of task.assignees">
+        <div class="user-icon more" matTooltip="More assigned users" matTooltipPosition="above" aria-label="More assigned users" (click)="taskDetailsDialog()" *ngIf="task.assignees.length>maxUsersNumber">
+            <mat-icon style="color: white;">group</mat-icon>
+        </div>
+        <div *ngFor="let user of task.assignees.slice(0,maxUsersNumber)">
             <div class="user-icon" matTooltip="{{user.userName}}" matTooltipPosition="above" aria-label="User" [matMenuTriggerFor]="menu">
                 <mat-icon style="color: black;">person</mat-icon>
             </div>

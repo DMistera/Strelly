@@ -1,25 +1,29 @@
-<h1 mat-dialog-title>Assign user to task</h1>
-<div style="align-content: center; display: flex; align-items: center; justify-content: center;"  *ngIf="loadingData">
-    <mat-spinner [diameter]="40"></mat-spinner>
+<div class="form-wrapper">
+  <div class="form-header">
+    Assign user to task
+  </div>
+  <div class="form-content">
+    <div style="align-content: center; display: flex; align-items: center; justify-content: center;"  *ngIf="loadingData">
+      <mat-spinner [diameter]="40"></mat-spinner>
+    </div>
+  
+    <div *ngIf="!loadingData">
+      <form class="full-width" style="margin: 0;">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Assignee</mat-label>
+            <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngFor="let option of filteredUsers | async" [value]="option">
+                {{option.userName}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </form>
+    </div>
+    <mat-dialog-actions align="end">
+        <button mat-button [mat-dialog-close]="undefined">Cancel</button>
+        <button mat-flat-button (click)="closeDialog()" style="background-color: darkcyan; color: white" >Assign</button>
+    </mat-dialog-actions>
+  </div>  
 </div>
-
-<div *ngIf="!loadingData">
-    <!-- <div *ngFor="let u of users">{{u.userName}}</div> -->
-    <form class="example-form">
-        <mat-form-field class="example-full-width" appearance="fill">
-          <mat-label>Assignee</mat-label>
-          <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
-          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-            <mat-option *ngFor="let option of filteredUsers | async" [value]="option">
-              {{option.userName}}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
-      </form>
-</div>
-
-<mat-dialog-actions align="end">
-    <button mat-button [mat-dialog-close]="undefined">Cancel</button>
-    <button mat-flat-button (click)="closeDialog()" color="accent" >Assign</button>
-</mat-dialog-actions>
 
