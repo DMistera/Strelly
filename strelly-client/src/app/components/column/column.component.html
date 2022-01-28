@@ -1,12 +1,12 @@
 <mat-card class="column" [ngClass]="{'column': true, 'column-new': new}">
   <div class="wrapper" *ngIf="new">
-    <button  mat-icon-button style="color: gold" (click)="newColumnDialog()">
+    <button  mat-icon-button style="color: darkcyan" (click)="newColumnDialog()">
       <mat-icon >add</mat-icon>
     </button>
   </div>
   
   <div class="columns-header" *ngIf="!new">
-    <mat-icon style="color: indigo">view_headline</mat-icon>
+    <mat-icon style="color: black">view_headline</mat-icon>
     <div class="column-name flex-1">
       <mat-card-title style="margin-bottom: 0px;">{{column.name}}</mat-card-title>
     </div>
