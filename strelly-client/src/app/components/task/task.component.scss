@@ -4,6 +4,7 @@ mat-card {
 }
 
 .title{
+  display: flex;
   text-align: left;
   align-items: center;
   width: 100%; 
@@ -27,6 +28,7 @@ mat-card {
   justify-content: flex-end; 
   align-content: flex-end;
   padding-right: 0.1rem;
+  padding-top: 0.2rem;
 }
 
 .user-icon{
@@ -46,10 +48,16 @@ mat-card {
   &.add{
     background: darkcyan;
   }
+  &.more{
+    background: steelblue;
+  }
 }
 .user-icon:hover{
   background: rgb(233, 233, 233);
   &.add{
     background: rgb(0, 100, 100);
+  }
+  &.more{
+    background: rgb(60, 110, 155);
   }
 }
