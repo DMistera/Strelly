@@ -47,3 +47,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .full-width {
     width: 100%;
 }
+
+.mat-tab-group.mat-primary .mat-ink-bar{
+    background-color: rgba(30, 143, 255, 0.7) !important;
+}
+
+input:-webkit-autofill { 
+    -webkit-background-clip: text;
+    background-clip: text;
+}
