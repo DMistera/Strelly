@@ -11,6 +11,9 @@ import { AuthService } from '@app/services/auth.service';
 export class NavBarComponent {
   @Input() appTitle: string;
   @Input() user: User|null;
+  @Input() rawVersion: boolean;
+
+  
 
   constructor(private router: Router, private authService: AuthService) { }
 
