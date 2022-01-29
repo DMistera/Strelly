@@ -1,0 +1,55 @@
+@media (max-width: 958px){
+    .form-row{
+        display: flex; 
+        flex-direction: column;
+        &.reversed{
+            flex-direction: column-reverse;
+        }
+        .mat-form-field{
+            padding: 0;
+        }
+    }
+
+    .lr{
+        display: none;
+        overflow: hidden;
+        color: transparent;
+        background-color: transparent;
+        width: 0;
+        height: 0%;
+    }
+    .tb{
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+@media (min-width: 958px){
+    .form-row{
+        display: flex; 
+        flex-direction: row;
+        &.reversed{
+            flex-direction: row-reverse;
+        }
+        .mat-form-field{
+            padding-right: 5px;
+            &.end{
+                padding-right: 0;
+            }
+        }
+    }
+    .lr{
+        display: flex;
+        flex-grow: 1;
+        flex-direction: column;
+    }
+    .tb{
+        display: none;
+        overflow: hidden;
+        color: transparent;
+        background-color: transparent;
+        width: 0;
+        height: 0%;
+    }
+}
+

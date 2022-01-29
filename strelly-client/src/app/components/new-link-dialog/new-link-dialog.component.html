@@ -1,0 +1,60 @@
+<div class="form-wrapper">
+    <div class="form-header">
+      <div class="item">
+        <mat-icon style="color: darkcyan;">link</mat-icon>
+      </div>
+      <div class="item grow">
+        New link
+      </div>
+    </div> 
+
+    <div class="form-content">
+        <form mat-dialog-content (ngSubmit)="closeDialog()" [formGroup]="form" style="margin: 0; padding: 0;" class="form-row" [class.reversed]="!isDirectionFrom">
+            <mat-form-field appearance="fill" class="full-width disabled" style="margin: 0;" readonly>
+                <mat-label>Task1</mat-label>
+                <input matInput type="text" placeholder="{{task.name}}" formControlName="task1" [value]="task.name" readonly>
+              </mat-form-field>
+
+            <mat-form-field appearance="fill" class="full-width" style="margin: 0;">
+                <mat-label>Type</mat-label>
+                <mat-select formControlName="type">
+                    <mat-option *ngFor="let type of types" [value]="type.id">
+                        {{type.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="full-width end" style="margin: 0;">
+                <mat-label>Task2</mat-label>
+                <mat-select formControlName="task2">
+                    <mat-option *ngFor="let t of tasks" [value]="t">
+                        {{t.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </form>
+
+        <div class="lr">
+            <button mat-flat-button class="item" style="background-color: gainsboro;" (click)="toogleDirection()" *ngIf="isDirectionFrom">
+                <mat-icon style="color: black"> switch_left</mat-icon>
+            </button>
+            <button mat-flat-button class="item" style="background-color: gainsboro;" (click)="toogleDirection()" *ngIf="!isDirectionFrom">
+                <mat-icon style="color: black"> switch_right</mat-icon>
+            </button>
+        </div>
+
+        <div class="tb">
+            <button mat-flat-button class="item" style="background-color: gainsboro;" (click)="toogleDirection()" *ngIf="isDirectionFrom">
+                <mat-icon style="color: black; transform: rotate(90deg);"> switch_left</mat-icon>
+            </button>
+            <button mat-flat-button class="item" style="background-color: gainsboro;" (click)="toogleDirection()" *ngIf="!isDirectionFrom">
+                <mat-icon style="color: black; transform: rotate(-90deg);"> switch_left</mat-icon>
+            </button>
+        </div>
+        
+        <mat-dialog-actions align="end">
+          <button mat-button [mat-dialog-close]="undefined">Cancel</button>
+          <button mat-flat-button (click)="closeDialog()" style="background-color: darkcyan; color: white;">Link</button>
+        </mat-dialog-actions>
+      </div>
+  </div>
