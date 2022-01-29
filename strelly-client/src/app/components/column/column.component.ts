@@ -143,6 +143,6 @@ export class ColumnComponent implements OnChanges {
         event.currentIndex,
       );
     }
-    this.tasksService.editTask(event.container.data[event.currentIndex], Number(event.container.id.split("-")[1]), event.currentIndex)
+    this.tasksService.editTask(event.container.data[event.currentIndex], Number(event.container.id.split("-")[1]), event.currentIndex+1)
   }
 }

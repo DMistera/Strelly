@@ -96,19 +96,16 @@
             </div>
             <div class="assigned-users">
                 <div *ngFor="let user of task.assignees">
-                    <!-- [matMenuTriggerFor]="menu"  matTooltip="{{user.userName}}" matTooltipPosition="above" -->
-                    <div class="user-icon" aria-label="User" >
+                    <div class="user-icon" aria-label="User" [matMenuTriggerFor]="menu" matTooltipPosition="above">
                         <mat-icon>person</mat-icon>
                         <div class="text-description">{{user.userName}}</div>
                     </div>
-                    <!-- <mat-menu id="{{user.id}}" #menu="matMenu" xPosition="after">
-                        <p style="align-items: center; text-align: center; margin: 1rem 0;">{{user.userName}}</p>
-                        <hr/>
+                    <mat-menu id="{{user.id}}" #menu="matMenu" xPosition="after">
                         <button mat-menu-item (click)="dismissUser(user)">
                             <mat-icon style="color: orangered">person_remove</mat-icon>
-                            <span>Dismiss User</span>
+                            <span>Dismiss {{user.userName}}</span>
                         </button>
-                    </mat-menu> -->
+                    </mat-menu>
                 </div>
                 <div class="user-icon add" aria-label="Assign User" (click)="assignUserToTaskDialog()">
                     <mat-icon style="color: white">add</mat-icon>
@@ -123,22 +120,21 @@
             </div>
             <div class="linked-tasks">
                 <div *ngFor="let link of links">
-                    <!-- [matMenuTriggerFor]="menu"  matTooltip="{{user.userName}}" matTooltipPosition="above" -->
-                    <div class="task-link-icon" [class.block]="link.isBlocking()" [class.relate]="link.isRelating()" aria-label="Task Link" >
+                    <div class="task-link-icon" [matMenuTriggerFor]="linkmenu" [class.block]="link.isBlocking()" [class.relate]="link.isRelating()" aria-label="Task Link" >
                         <mat-icon *ngIf="link.isBlocking()">block</mat-icon>
                         <mat-icon *ngIf="link.isRelating()">link</mat-icon>
-                        <div class="text-description">Link {{link.id}}</div>
+                        <div class="text-description" style="margin: 0;">{{link.fromTask.name}}</div>
+                        <mat-icon style="color:black">east</mat-icon>
+                        <div class="text-description">{{link.toTask.name}}</div>
                     </div>
-                    <!-- <mat-menu id="{{user.id}}" #menu="matMenu" xPosition="after">
-                        <p style="align-items: center; text-align: center; margin: 1rem 0;">{{user.userName}}</p>
-                        <hr/>
-                        <button mat-menu-item (click)="dismissUser(user)">
+                    <mat-menu id="{{link.id}}" #linkmenu="matMenu" xPosition="after">
+                        <button mat-menu-item (click)="removeLink(link)">
                             <mat-icon style="color: orangered">remove</mat-icon>
-                            <span>Dismiss User</span>
+                            <span>Remove Link</span>
                         </button>
-                    </mat-menu> -->
+                    </mat-menu>
                 </div>
-                <div class="task-link-icon add" aria-label="Link task" (click)="assignUserToTaskDialog()">
+                <div class="task-link-icon add" aria-label="Link task" (click)="newLinkDialog()">
                     <mat-icon style="color: white">add</mat-icon>
                     <div class="text-description">Link</div>
                 </div>

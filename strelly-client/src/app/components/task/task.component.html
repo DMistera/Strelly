@@ -17,20 +17,21 @@
                     <mat-icon >info_outlined</mat-icon>
                     <span>Details</span>
                 </button>
-                <hr/>
-                <button mat-menu-item (click)="assignUserToTaskDialog()">
-                    <mat-icon style="color: darkcyan">person_add</mat-icon>
-                    <span>Assign user</span>
-                </button>
-                <!-- <button mat-menu-item (click)="dismissUserDialog()">
-                    <mat-icon style="color: orangered">person_remove</mat-icon>
-                    <span>Dismiss user</span>
-                </button> -->
+                <hr style="margin: 0;"/>
                 <button mat-menu-item (click)="editTaskDialog()">
                     <mat-icon>edit</mat-icon>
                     <span>Edit</span>
                 </button>
-                <hr/>
+                <button mat-menu-item (click)="assignUserToTaskDialog()">
+                    <mat-icon style="color: darkcyan">person_add</mat-icon>
+                    <span>Assign user</span>
+                </button>
+                <button mat-menu-item (click)="newLinkDialog()">
+                    <mat-icon style="color: black">link</mat-icon>
+                    <span>Link task</span>
+                </button>
+
+                <hr style="margin: 0;"/>
                 <button mat-menu-item (click)="deleteTaskDialog()">
                     <mat-icon style="color: orangered"> delete</mat-icon>
                     <span>Delete</span>
@@ -70,11 +71,9 @@
                 <mat-icon style="color: black;">person</mat-icon>
             </div>
             <mat-menu id="{{user.id}}" #menu="matMenu" xPosition="after">
-                <p style="align-items: center; text-align: center; margin: 1rem 0;">{{user.userName}}</p>
-                <hr/>
                 <button mat-menu-item (click)="dismissUser(user)">
                     <mat-icon style="color: orangered">person_remove</mat-icon>
-                    <span>Dismiss User</span>
+                    <span>Dismiss {{user.userName}}</span>
                 </button>
             </mat-menu>
         </div>

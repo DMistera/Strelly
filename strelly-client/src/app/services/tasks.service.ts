@@ -64,11 +64,13 @@ export class TasksService {
     else{
       return this.http.get<Task[]>('/api/tasks').pipe(map(result => {
         // console.log(result);
+        let tempTasks = [] as any;
         result.forEach((task: any)=>{
-          this.tasks[task.column.id].push(new Task(task));
+          // this.tasks[task.column.id].push(new Task(task));
+          tempTasks.push(new Task(task))
         })
-        this.tasksSubject.next(this.tasks);
-        return this.tasks;
+        // this.tasksSubject.next(this.tasks);
+        return tempTasks;
       }));
     }
   }
