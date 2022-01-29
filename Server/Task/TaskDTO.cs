@@ -18,7 +18,7 @@
             Column = task.Column;
             CreateTime = task.CreateTime;
             UpdateTime = task.UpdateTime;
-            Creator = new ApplicationUserDTO(task.Creator);
+            Creator = task.Creator == null ? null : new ApplicationUserDTO(task.Creator);
             Assignees = task.Assignees == null ? null : task.Assignees.Select(assignee => new ApplicationUserDTO(assignee));
             Order = task.Order;
         }
